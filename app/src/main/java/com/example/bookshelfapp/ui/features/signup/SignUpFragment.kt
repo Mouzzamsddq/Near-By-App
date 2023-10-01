@@ -70,6 +70,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(
                     findNavControllerSafely()?.navigateSafe(
                         action = R.id.action_sign_up_fragment_to_signInFragment,
                         args = null,
+                        isNavigateUP = true,
                     )
                 }
 
