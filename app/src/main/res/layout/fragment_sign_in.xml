@@ -229,7 +229,6 @@
                 android:fontFamily="@font/poppins"
                 android:letterSpacing="0.01"
                 android:singleLine="true"
-                android:text="This username is not available"
                 android:textColor="@color/red_color"
                 android:textSize="@dimen/size_12"
                 android:visibility="gone"

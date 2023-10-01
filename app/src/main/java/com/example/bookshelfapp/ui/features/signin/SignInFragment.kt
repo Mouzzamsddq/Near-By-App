@@ -7,11 +7,16 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import com.example.bookshelfapp.R
 import com.example.bookshelfapp.base.BaseFragment
+import com.example.bookshelfapp.constants.StringConstant
 import com.example.bookshelfapp.databinding.FragmentSignInBinding
 import com.example.bookshelfapp.ui.features.signin.viewmodel.SignInViewModel
+import com.example.bookshelfapp.ui.features.signup.viewmodel.SignUpViewModel
 import com.example.bookshelfapp.utils.findNavControllerSafely
+import com.example.bookshelfapp.utils.hide
 import com.example.bookshelfapp.utils.hideKeyboard
 import com.example.bookshelfapp.utils.navigateSafe
+import com.example.bookshelfapp.utils.setBackground
+import com.example.bookshelfapp.utils.show
 import com.example.bookshelfapp.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -69,6 +74,25 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(
     }
 
     private fun setObservers() {
+        viewModel.fieldsValidationStatus.observe(viewLifecycleOwner) {
+            when (it) {
+                is SignUpViewModel.FieldsValidationStatus.Success -> {
+                    changeSignInButtonState(isEnable = true)
+                    changeStateOfNameError(show = false)
+                    changeStateOfPasswordError(show = false)
+                }
+
+                is SignUpViewModel.FieldsValidationStatus.NameError -> {
+                    changeSignInButtonState()
+                    changeStateOfNameError(show = true, it.errorMessage)
+                }
+
+                is SignUpViewModel.FieldsValidationStatus.PasswordError -> {
+                    changeSignInButtonState()
+                    changeStateOfPasswordError(show = true, it.errorMessage)
+                }
+            }
+        }
         viewModel.signInStatus.observe(viewLifecycleOwner) {
             when (it) {
                 is SignInViewModel.SignInStatus.Success -> {
@@ -104,6 +128,36 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(
                     name = nameEt.text.toString(),
                     password = passwordEt.text.toString(),
                 )
+            }
+        }
+    }
+
+    private fun changeStateOfNameError(show: Boolean, errorMessage: String = StringConstant.EMPTY_STRING) {
+        binding.apply {
+            listOf(warningIv, errorReasonTv).apply {
+                if (show) show() else hide()
+            }
+            errorReasonTv.text = errorMessage
+        }
+    }
+
+    private fun changeStateOfPasswordError(show: Boolean, errorMessage: String = StringConstant.EMPTY_STRING) {
+        binding.apply {
+            listOf(pwdWarningIv, pwdErrorReasonTv).apply {
+                if (show) show() else hide()
+            }
+            pwdErrorReasonTv.text = errorMessage
+        }
+    }
+
+    private fun changeSignInButtonState(isEnable: Boolean = false) {
+        context?.let { context ->
+            binding.loginBtn.apply {
+                setBackground(
+                    context,
+                    if (isEnable) R.drawable.rounded_login_btn_enabled else R.drawable.rounded_rectangle_for_login_btn,
+                )
+                isEnabled = isEnable
             }
         }
     }
