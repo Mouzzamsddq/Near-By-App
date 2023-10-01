@@ -24,6 +24,7 @@ class FavouritesBookFragment : BaseFragment<FragmentFavouritesBookBinding>(
                 if (fromFav) {
 //                    viewModel.addRemoveFavBook(book = book, pos = pos)
                 } else {
+                    book.isFav = true
                     findNavControllerSafely()?.navigate(
                         FavouritesBookFragmentDirections.actionFavBookFragmentToBookDetailsFragment(
                             books = book,
