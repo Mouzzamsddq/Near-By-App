@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.bookshelfapp.R
 import com.example.bookshelfapp.base.Resource
 import com.example.bookshelfapp.constants.StringConstant
-import com.example.bookshelfapp.data.features.auth.AuthRepo
+import com.example.bookshelfapp.data.features.auth.repository.AuthRepo
 import com.example.bookshelfapp.data.features.auth.repository.local.entity.Users
 import com.example.bookshelfapp.utils.PatternUtils
 import dagger.hilt.android.lifecycle.HiltViewModel

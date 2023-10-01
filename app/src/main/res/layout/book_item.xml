@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/margin_20"
+    android:paddingTop="@dimen/margin_18">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_book"
+        android:layout_width="53dp"
+        android:layout_height="80dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.WithCornerRadius6"
+        tools:srcCompat="@drawable/ic_default_book" />
+
+    <TextView
+        android:id="@+id/book_title_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_15"
+        android:layout_marginEnd="@dimen/margin_5"
+        android:fontFamily="@font/poppins_medium"
+        android:letterSpacing="0.01"
+        android:text="@string/book_title"
+        android:textColor="?primaryTextColor"
+        android:textSize="@dimen/size_14sp"
+        app:layout_constraintEnd_toStartOf="@id/bookmark_icon_iv"
+        app:layout_constraintStart_toEndOf="@id/iv_book"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_goneMarginEnd="@dimen/margin_30" />
+
+    <TextView
+        android:id="@+id/hits_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_15"
+        android:layout_marginEnd="@dimen/margin_5"
+        android:ellipsize="end"
+        android:fontFamily="@font/poppins"
+        android:letterSpacing="0.01"
+        android:maxLines="2"
+        android:text="@string/dummy_hits"
+        android:textColor="?secondaryTextColor"
+        android:textSize="@dimen/size_14sp"
+        app:layout_constraintEnd_toStartOf="@id/bookmark_icon_iv"
+        app:layout_constraintStart_toEndOf="@id/iv_book"
+        app:layout_constraintTop_toBottomOf="@id/book_title_tv"
+        app:layout_goneMarginEnd="@dimen/margin_30" />
+
+
+    <ImageView
+        android:id="@+id/bookmark_icon_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_unlike"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

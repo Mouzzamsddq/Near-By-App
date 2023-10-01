@@ -1,4 +1,4 @@
-package com.example.bookshelfapp.data.features.auth
+package com.example.bookshelfapp.data.features.auth.repository
 
 import com.example.bookshelfapp.data.features.auth.repository.local.AuthLocalDataSource
 import com.example.bookshelfapp.data.features.auth.repository.local.entity.Users
@@ -11,4 +11,6 @@ class AuthRepo @Inject constructor(
 
     suspend fun performSignIn(name: String, password: String) =
         authLocalDataSource.performSignIn(name = name, password = password)
+
+    fun saveUserAuthenticated() = authLocalDataSource.saveUserAuthenticated()
 }

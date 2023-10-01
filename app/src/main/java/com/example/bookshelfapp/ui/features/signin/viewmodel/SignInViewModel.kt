@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.bookshelfapp.R
 import com.example.bookshelfapp.base.Resource
 import com.example.bookshelfapp.constants.StringConstant
-import com.example.bookshelfapp.data.features.auth.AuthRepo
+import com.example.bookshelfapp.data.features.auth.repository.AuthRepo
 import com.example.bookshelfapp.ui.features.signup.viewmodel.SignUpViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -33,6 +33,7 @@ class SignInViewModel @Inject constructor(
         val result = authRepo.performSignIn(name = name, password = password)
         when (result.status) {
             Resource.Status.SUCCESS -> {
+                authRepo.saveUserAuthenticated()
                 _signInStatus.postValue(SignInStatus.Success)
             }
 
