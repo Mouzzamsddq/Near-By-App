@@ -2,6 +2,7 @@ package com.example.bookshelfapp.ui.features.details
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.bookshelfapp.R
@@ -40,6 +41,12 @@ class BookDetailsFragment : BaseFragment<FragmentBookDetailsBinding>(
                         .placeholder(R.drawable.ic_default_book)
                         .error(R.drawable.ic_default_book)
                         .into(ivBook)
+                    favIconIv.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            context,
+                            if (book.isFav == true) R.drawable.ic_like else R.drawable.ic_unlike,
+                        ),
+                    )
                 }
                 tvTitle.text = it.title ?: StringConstant.EMPTY_STRING
                 tvHits.text = it.hits.toString()

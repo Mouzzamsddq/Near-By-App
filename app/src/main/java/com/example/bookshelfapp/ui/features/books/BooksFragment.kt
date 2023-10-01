@@ -20,12 +20,16 @@ class BooksFragment : BaseFragment<FragmentBooksBinding>(
     private val viewModel: BooksViewModel by viewModels()
     private val booksAdapter: BooksAdapter by lazy {
         BooksAdapter(
-            clickAction = {
-                findNavControllerSafely()?.navigate(
-                    BooksFragmentDirections.actionBooksFragmentToBookDetailsFragment(
-                        books = it,
-                    ),
-                )
+            clickAction = { book, fromFav, pos ->
+                if (fromFav) {
+                    viewModel.addRemoveFavBook(book = book, pos = pos)
+                } else {
+                    findNavControllerSafely()?.navigate(
+                        BooksFragmentDirections.actionBooksFragmentToBookDetailsFragment(
+                            books = book,
+                        ),
+                    )
+                }
             },
         )
     }

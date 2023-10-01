@@ -1,21 +1,26 @@
-package com.smrize.app.data.db
+package com.example.bookshelfapp.base
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.example.bookshelfapp.constants.StringConstant
 import com.example.bookshelfapp.data.features.auth.repository.local.dao.UsersDao
 import com.example.bookshelfapp.data.features.auth.repository.local.entity.Users
+import com.example.bookshelfapp.data.features.favourites.repository.local.FavBook
+import com.example.bookshelfapp.data.features.favourites.repository.local.dao.FavBooksDao
 
 @Database(
-    version = 1,
-    entities = [Users::class],
+    version = 2,
+    entities = [Users::class, FavBook::class],
     exportSchema = false,
 )
+@TypeConverters(Converter::class)
 abstract class BookShelfDb : RoomDatabase() {
 
     abstract fun usersDao(): UsersDao
+    abstract fun favBookDao(): FavBooksDao
 
     companion object {
         @Volatile

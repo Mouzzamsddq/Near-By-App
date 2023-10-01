@@ -26,7 +26,7 @@
 
 
         <ImageView
-            android:id="@+id/bookmark_icon_iv"
+            android:id="@+id/fav_icon_iv"
             android:layout_width="@dimen/margin_40"
             android:layout_height="@dimen/margin_40"
             android:layout_marginTop="@dimen/margin_10"
