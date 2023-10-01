@@ -27,6 +27,22 @@
         android:id="@+id/signInFragment"
         android:name="com.example.bookshelfapp.ui.features.signin.SignInFragment"
         android:label="@string/sign_in"
-        tools:layout="@layout/fragment_sign_in" />
+        tools:layout="@layout/fragment_sign_in" >
+
+        <action
+            android:id="@+id/action_sign_in_fragment_to_signupFragment"
+            app:destination="@id/signupFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/signupFragment"
+        android:name="com.example.bookshelfapp.ui.features.signup.SignUpFragment"
+        android:label="@string/sign_up_label"
+        tools:layout="@layout/fragment_sign_up" />
 
 </navigation>

@@ -13,7 +13,7 @@ abstract class BaseFragment<T : ViewBinding>(
 ) : Fragment() {
     private var _binding: T? = null
     private var mainActivity: MainActivity? = null
-    private val binding get() = _binding!!
+    protected val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
