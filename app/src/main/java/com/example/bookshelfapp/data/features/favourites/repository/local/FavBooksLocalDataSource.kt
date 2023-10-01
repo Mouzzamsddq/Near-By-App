@@ -18,4 +18,6 @@ class FavBooksLocalDataSource @Inject constructor(
     }
 
     suspend fun isFavBook(bookId: String) = favBooksDao.isFavBook(bookId = bookId)
+
+    fun getFavBooks() = favBooksDao.getFavBooks()
 }

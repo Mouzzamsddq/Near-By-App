@@ -11,4 +11,6 @@ class FavouriteBooksRepo @Inject constructor(
     suspend fun addRemoveFavBooks(favBook: FavBook) = favBooksLocalDataSource.addRemoveFavBooks(favBook)
 
     suspend fun isFavBook(bookId: String) = favBooksLocalDataSource.isFavBook(bookId = bookId)
+
+    fun getFavBooks() = favBooksLocalDataSource.getFavBooks()
 }

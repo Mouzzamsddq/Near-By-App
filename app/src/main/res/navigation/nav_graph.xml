@@ -25,7 +25,15 @@
         android:id="@+id/favouritesBookFragment"
         android:name="com.example.bookshelfapp.ui.features.favourites.FavouritesBookFragment"
         android:label="@string/favourites"
-        tools:layout="@layout/fragment_favourites_book" />
+        tools:layout="@layout/fragment_favourites_book" >
+        <action
+            android:id="@+id/action_fav_book_fragment_to_BookDetailsFragment"
+            app:destination="@id/bookDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
 
     <fragment
         android:id="@+id/bookDetailFragment"

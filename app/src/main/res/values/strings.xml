@@ -35,4 +35,5 @@
     <string name="backButton">back\n</string>
     <string name="bookmark">bookmark\n</string>
     <string name="book_detail">Book Details</string>
+    <string name="no_fav_message">You haven\'t marked any book as fav</string>
 </resources>
