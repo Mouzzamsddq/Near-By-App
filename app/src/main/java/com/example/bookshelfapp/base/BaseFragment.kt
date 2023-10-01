@@ -12,8 +12,8 @@ abstract class BaseFragment<T : ViewBinding>(
     val inflate: (LayoutInflater, ViewGroup?, Boolean) -> T,
 ) : Fragment() {
     private var _binding: T? = null
-    private var mainActivity: MainActivity? = null
-    private val binding get() = _binding!!
+    protected var mainActivity: MainActivity? = null
+    protected val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,4 +31,8 @@ abstract class BaseFragment<T : ViewBinding>(
     }
 
     fun isBindingNull() = _binding == null
+
+    fun showHideLoaderView(show:Boolean) {
+        mainActivity?.showHideLoaderView(show = show)
+    }
 }

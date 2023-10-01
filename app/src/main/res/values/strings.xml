@@ -15,4 +15,18 @@
     <string name="favourites">Favourites</string>
     <string name="profile">Profile</string>
     <string name="sign_in">Sign In</string>
+    <string name="sign_up_label">Sign Up</string>
+    <string name="create_account">Create an account</string>
+    <string name="login_here">Login here</string>
+    <string name="signup">Signup</string>
+    <string name="already_account">Already have an account?</string>
+    <string name="username">Username</string>
+    <string name="create_password">Create a password</string>
+    <string name="select_country">Select country</string>
+    <string name="select_a_country">Select a country</string>
+    <string name="please_enter_valid_name">Please enter a valid name…!</string>
+    <string name="please_enter_valid_password">Please enter a valid password…!</string>
+    <string name="password_validity_error">Password must have at least 8 characters with one number, special characters, one lowercase letter, and one uppercase letter…!</string>
+    <string name="please_select_country">Please select country...!</string>
+    <string name="signup_successful">Signup successful</string>
 </resources>
