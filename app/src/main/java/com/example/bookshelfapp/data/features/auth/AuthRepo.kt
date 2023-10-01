@@ -8,4 +8,7 @@ class AuthRepo @Inject constructor(
     private val authLocalDataSource: AuthLocalDataSource,
 ) {
     suspend fun performSignup(users: Users) = authLocalDataSource.performSignUp(users = users)
+
+    suspend fun performSignIn(name: String, password: String) =
+        authLocalDataSource.performSignIn(name = name, password = password)
 }

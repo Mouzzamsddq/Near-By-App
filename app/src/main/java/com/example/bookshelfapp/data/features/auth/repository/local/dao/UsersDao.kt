@@ -11,9 +11,9 @@ interface UsersDao {
     @Insert
     suspend fun insertUser(users: Users)
 
-    @Query("SELECT * FROM USERS")
-    suspend fun getUsersList(): List<Users>
-
     @Query("Select Exists(SELECT * FROm users WHERE username = :username)")
     suspend fun isUserAlreadyExist(username: String): Boolean
+
+    @Query("SELECT COUNT(*) FROM users WHERE username = :username AND password = :password")
+    suspend fun performSignIn(username: String, password: String): Int
 }
