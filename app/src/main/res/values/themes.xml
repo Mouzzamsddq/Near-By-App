@@ -2,7 +2,31 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.BookShelfApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="grey1color">@color/grey_1</item>
+        <item name="grey2color">@color/grey_2</item>
+        <item name="android:colorAccent">@color/purple_main</item>
+        <item name="colorPrimary">@color/purple_main</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="textHighlightColor">@color/color_highlight</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/white_alternative</item>
+        <item name="android:textColorLink">@color/primary_black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/white_bg</item>
+        <!-- Customize your theme here. -->
+        <item name="android:textColor">@color/primary_black</item>
+        <item name="android:colorBackground">@color/white</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="snackBarSurface">@color/primary_black</item>
+        <item name="primaryTextColor">@color/primary_black</item>
+        <item name="secondaryTextColor">@color/secondary_black</item>
+        <item name="miniPlayerTextColor">@color/grey_1</item>
+        <item name="actionTextColor">@color/purple_main</item>
+        <item name="textEntryBackground">@color/grey_2</item>
+        <item name="transparentBackground">@color/transparent_black</item>
     </style>
 
     <style name="Theme.BookShelfApp" parent="Base.Theme.BookShelfApp" />

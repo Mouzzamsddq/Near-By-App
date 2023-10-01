@@ -2,25 +2,31 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/booksFragment"
+    app:startDestination="@id/signInFragment"
     android:id="@+id/nav_graph">
 
     <fragment
         android:id="@+id/booksFragment"
         android:name="com.example.bookshelfapp.ui.features.books.BooksFragment"
-        android:label=""
+        android:label="@string/home"
         tools:layout="@layout/fragment_books" />
 
     <fragment
         android:id="@+id/favouritesBookFragment"
         android:name="com.example.bookshelfapp.ui.features.favourites.FavouritesBookFragment"
-        android:label="Favourites"
+        android:label="@string/favourites"
         tools:layout="@layout/fragment_favourites_book" />
 
     <fragment
         android:id="@+id/accountFragment"
         android:name="com.example.bookshelfapp.ui.features.account.MyAccountFragment"
-        android:label="Albums"
+        android:label="@string/profile"
         tools:layout="@layout/fragment_my_account" />
+
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.example.bookshelfapp.ui.features.signin.SignInFragment"
+        android:label="@string/sign_in"
+        tools:layout="@layout/fragment_sign_in" />
 
 </navigation>
