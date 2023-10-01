@@ -3,7 +3,8 @@ package com.example.bookshelfapp.di
 import android.app.Application
 import com.example.bookshelfapp.base.LocalStorage
 import com.example.bookshelfapp.data.features.auth.repository.local.dao.UsersDao
-import com.smrize.app.data.db.BookShelfDb
+import com.example.bookshelfapp.data.features.favourites.repository.local.dao.FavBooksDao
+import com.example.bookshelfapp.base.BookShelfDb
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,4 +23,7 @@ object DataModule {
 
     @Provides
     fun usersDao(db: BookShelfDb): UsersDao = db.usersDao()
+
+    @Provides
+    fun favBookDao(db: BookShelfDb): FavBooksDao = db.favBookDao()
 }

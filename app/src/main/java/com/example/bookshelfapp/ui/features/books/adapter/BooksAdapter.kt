@@ -7,9 +7,10 @@ import com.bumptech.glide.Glide
 import com.example.bookshelfapp.R
 import com.example.bookshelfapp.data.features.books.repository.remote.model.BooksItem
 import com.example.bookshelfapp.databinding.BookItemBinding
+import com.example.bookshelfapp.utils.setBackground
 
 class BooksAdapter(
-    private val clickAction: (BooksItem) -> Unit,
+    private val clickAction: (BooksItem, Boolean, Int) -> Unit,
 ) : RecyclerView.Adapter<BooksAdapter.VH>() {
 
     private var books = emptyList<BooksItem>()
@@ -36,7 +37,7 @@ class BooksAdapter(
 
     inner class VH(
         val binding: BookItemBinding,
-        val clickAction: (BooksItem) -> Unit,
+        val clickAction: (BooksItem, Boolean, Int) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bindBook(book: BooksItem) {
             Glide.with(itemView.context)
@@ -47,8 +48,12 @@ class BooksAdapter(
             binding.apply {
                 bookTitleTv.text = book.title ?: ""
                 hitsTv.text = book.hits.toString()
+                favIconIv.setBackground(itemView.context, if(book.isFav == true) R.drawable.ic_like else R.drawable.ic_unlike)
+                favIconIv.setOnClickListener {
+                    clickAction(book, true, adapterPosition)
+                }
                 itemView.setOnClickListener {
-                    clickAction(book)
+                    clickAction(book, false, 0)
                 }
             }
         }

@@ -18,4 +18,5 @@ data class BooksItem(
     val lastChapterDate: Int?,
     @SerializedName("title")
     val title: String?,
+    var isFav: Boolean?
 ) : Parcelable
