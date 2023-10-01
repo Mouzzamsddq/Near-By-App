@@ -3,6 +3,8 @@ package com.example.bookshelfapp.ui.features.signin
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.example.bookshelfapp.R
@@ -26,6 +28,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(
 ) {
 
     private val viewModel: SignInViewModel by viewModels()
+    private var isPasswordVisible = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -128,6 +131,18 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(
                     name = nameEt.text.toString(),
                     password = passwordEt.text.toString(),
                 )
+            }
+            showHideIv.setOnClickListener {
+                if (isPasswordVisible) {
+                    isPasswordVisible = false
+                    passwordEt.transformationMethod = PasswordTransformationMethod.getInstance()
+                    showHideIv.setImageResource(R.drawable.ic_hide_password)
+                } else {
+                    isPasswordVisible = true
+                    passwordEt.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                    showHideIv.setImageResource(R.drawable.ic_show_password)
+                }
+                passwordEt.setSelection(passwordEt.text.length)
             }
         }
     }
