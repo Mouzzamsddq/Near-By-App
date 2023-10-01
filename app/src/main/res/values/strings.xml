@@ -30,4 +30,9 @@
     <string name="please_select_country">Please select country...!</string>
     <string name="signup_successful">Signup successful</string>
     <string name="login_successful">Login successful</string>
+    <string name="book_title">Book Title</string>
+    <string name="dummy_hits">112</string>
+    <string name="backButton">back\n</string>
+    <string name="bookmark">bookmark\n</string>
+    <string name="book_detail">Book Details</string>
 </resources>

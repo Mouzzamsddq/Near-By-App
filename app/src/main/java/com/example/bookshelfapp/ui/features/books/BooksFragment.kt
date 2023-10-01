@@ -8,6 +8,7 @@ import com.example.bookshelfapp.base.BaseFragment
 import com.example.bookshelfapp.databinding.FragmentBooksBinding
 import com.example.bookshelfapp.ui.features.books.adapter.BooksAdapter
 import com.example.bookshelfapp.ui.features.books.viewmodel.BooksViewModel
+import com.example.bookshelfapp.utils.findNavControllerSafely
 import com.example.bookshelfapp.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,6 +21,11 @@ class BooksFragment : BaseFragment<FragmentBooksBinding>(
     private val booksAdapter: BooksAdapter by lazy {
         BooksAdapter(
             clickAction = {
+                findNavControllerSafely()?.navigate(
+                    BooksFragmentDirections.actionBooksFragmentToBookDetailsFragment(
+                        books = it,
+                    ),
+                )
             },
         )
     }

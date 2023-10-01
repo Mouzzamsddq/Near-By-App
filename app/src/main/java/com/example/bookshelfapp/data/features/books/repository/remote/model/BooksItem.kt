@@ -1,8 +1,10 @@
 package com.example.bookshelfapp.data.features.books.repository.remote.model
 
-
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class BooksItem(
     @SerializedName("alias")
     val alias: String?,
@@ -15,5 +17,5 @@ data class BooksItem(
     @SerializedName("lastChapterDate")
     val lastChapterDate: Int?,
     @SerializedName("title")
-    val title: String?
-)
+    val title: String?,
+) : Parcelable

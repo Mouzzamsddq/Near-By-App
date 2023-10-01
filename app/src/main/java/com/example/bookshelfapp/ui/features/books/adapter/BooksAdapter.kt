@@ -9,7 +9,7 @@ import com.example.bookshelfapp.data.features.books.repository.remote.model.Book
 import com.example.bookshelfapp.databinding.BookItemBinding
 
 class BooksAdapter(
-    private val clickAction: (String) -> Unit,
+    private val clickAction: (BooksItem) -> Unit,
 ) : RecyclerView.Adapter<BooksAdapter.VH>() {
 
     private var books = emptyList<BooksItem>()
@@ -36,7 +36,7 @@ class BooksAdapter(
 
     inner class VH(
         val binding: BookItemBinding,
-        val clickAction: (String) -> Unit,
+        val clickAction: (BooksItem) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bindBook(book: BooksItem) {
             Glide.with(itemView.context)
@@ -45,8 +45,10 @@ class BooksAdapter(
                 .error(R.drawable.ic_default_book)
                 .into(binding.ivBook)
             binding.apply {
+                bookTitleTv.text = book.title ?: ""
+                hitsTv.text = book.hits.toString()
                 itemView.setOnClickListener {
-                    clickAction("")
+                    clickAction(book)
                 }
             }
         }

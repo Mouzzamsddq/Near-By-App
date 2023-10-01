@@ -24,7 +24,7 @@
         android:layout_marginEnd="@dimen/margin_5"
         android:fontFamily="@font/poppins_medium"
         android:letterSpacing="0.01"
-        android:text="Book Title"
+        android:text="@string/book_title"
         android:textColor="?primaryTextColor"
         android:textSize="@dimen/size_14sp"
         app:layout_constraintEnd_toStartOf="@id/bookmark_icon_iv"
@@ -33,7 +33,7 @@
         app:layout_goneMarginEnd="@dimen/margin_30" />
 
     <TextView
-        android:id="@+id/author_name_tv"
+        android:id="@+id/hits_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_15"
@@ -42,7 +42,7 @@
         android:fontFamily="@font/poppins"
         android:letterSpacing="0.01"
         android:maxLines="2"
-        android:text="by Author Name"
+        android:text="@string/dummy_hits"
         android:textColor="?secondaryTextColor"
         android:textSize="@dimen/size_14sp"
         app:layout_constraintEnd_toStartOf="@id/bookmark_icon_iv"
