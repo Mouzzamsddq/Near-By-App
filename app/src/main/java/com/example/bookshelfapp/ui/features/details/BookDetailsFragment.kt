@@ -1,16 +1,22 @@
 package com.example.bookshelfapp.ui.features.details
 
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.example.bookshelfapp.R
 import com.example.bookshelfapp.base.BaseFragment
 import com.example.bookshelfapp.constants.StringConstant
 import com.example.bookshelfapp.data.features.books.repository.remote.model.BooksItem
 import com.example.bookshelfapp.databinding.FragmentBookDetailsBinding
 import com.example.bookshelfapp.utils.findNavControllerSafely
+import com.example.bookshelfapp.utils.setDominantBackground
 
 class BookDetailsFragment : BaseFragment<FragmentBookDetailsBinding>(
     FragmentBookDetailsBinding::inflate,
@@ -36,10 +42,29 @@ class BookDetailsFragment : BaseFragment<FragmentBookDetailsBinding>(
         binding.apply {
             book?.let {
                 context?.let { context ->
-                    Glide.with(context)
-                        .load(book.image ?: "")
-                        .placeholder(R.drawable.ic_default_book)
-                        .error(R.drawable.ic_default_book)
+                    Glide.with(context).asBitmap().listener(object :
+                        RequestListener<Bitmap> {
+                        override fun onLoadFailed(
+                            e: GlideException?,
+                            model: Any?,
+                            target: Target<Bitmap>?,
+                            isFirstResource: Boolean,
+                        ): Boolean {
+                            return true
+                        }
+
+                        override fun onResourceReady(
+                            resource: Bitmap?,
+                            model: Any?,
+                            target: Target<Bitmap>?,
+                            dataSource: DataSource?,
+                            isFirstResource: Boolean,
+                        ): Boolean {
+                            binding.bookBackground.setDominantBackground(resource)
+                            resource?.let { ivBook.setImageBitmap(resource) }
+                            return true
+                        }
+                    }).load(book.image ?: "").placeholder(R.drawable.ic_default_book)
                         .into(ivBook)
                     favIconIv.setImageDrawable(
                         ContextCompat.getDrawable(

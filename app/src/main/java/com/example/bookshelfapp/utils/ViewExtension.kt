@@ -2,12 +2,15 @@ package com.example.bookshelfapp.utils
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Bitmap
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.palette.graphics.Palette
+import com.example.bookshelfapp.R
 
 fun View.gone() {
     isGone = true
@@ -54,3 +57,13 @@ fun Activity.hideKeyboard() =
         window,
         window.decorView,
     ).hide(WindowInsetsCompat.Type.ime())
+
+fun View.setDominantBackground(bitmap: Bitmap?) {
+    bitmap?.let {
+        Palette.from(it).generate { p ->
+            val color = p?.getDominantColor(ContextCompat.getColor(context, R.color.purple_main))
+                ?: R.color.purple_main
+            setBackgroundColor(color)
+        }
+    }
+}
