@@ -13,4 +13,6 @@ class AuthRepo @Inject constructor(
         authLocalDataSource.performSignIn(name = name, password = password)
 
     fun saveUserAuthenticated() = authLocalDataSource.saveUserAuthenticated()
+
+    fun logout() = authLocalDataSource.logout()
 }
