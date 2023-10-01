@@ -33,3 +33,16 @@ fun View.setBackground(context: Context, drawableId: Int) {
         drawableId,
     )
 }
+
+fun List<View>.show() {
+    forEach {
+        it.isVisible = true
+    }
+}
+
+fun List<View>.hide() {
+    forEach {
+        it.isVisible = false
+    }
+}
+

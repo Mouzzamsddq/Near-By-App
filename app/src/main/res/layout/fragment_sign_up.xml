@@ -116,9 +116,9 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_down_arrow"
                     android:layout_gravity="end|center_vertical"
-                    android:layout_marginEnd="@dimen/margin_10"/>
+                    android:layout_marginEnd="@dimen/margin_10"
+                    android:src="@drawable/ic_down_arrow" />
 
             </FrameLayout>
 
@@ -222,7 +222,7 @@
                 app:layout_constraintTop_toBottomOf="@id/password_tv" />
 
             <ImageView
-                android:id="@+id/username_warning_iv"
+                android:id="@+id/password_warning_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_24"
@@ -233,20 +233,21 @@
                 app:layout_constraintTop_toBottomOf="@id/password_et" />
 
             <TextView
-                android:id="@+id/username_error_reason_tv"
-                android:layout_width="wrap_content"
+                android:id="@+id/password_error_reason_tv"
+                android:layout_width="@dimen/margin_0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_6"
+                android:layout_marginEnd="@dimen/margin_20"
                 android:ellipsize="end"
                 android:fontFamily="@font/poppins"
                 android:letterSpacing="0.01"
-                android:singleLine="true"
+                android:text="@string/please_enter_valid_password"
                 android:textColor="@color/red_color"
                 android:textSize="@dimen/size_12"
                 android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@id/username_warning_iv"
-                app:layout_constraintStart_toEndOf="@id/username_warning_iv"
-                app:layout_constraintTop_toTopOf="@id/username_warning_iv" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/password_warning_iv"
+                app:layout_constraintTop_toTopOf="@id/password_warning_iv" />
 
             <TextView
                 android:id="@+id/sign_up_btn"
@@ -267,7 +268,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/password_et" />
+                app:layout_constraintTop_toBottomOf="@id/password_error_reason_tv" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
