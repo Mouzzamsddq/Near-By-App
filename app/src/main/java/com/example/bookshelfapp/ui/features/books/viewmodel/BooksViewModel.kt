@@ -55,6 +55,23 @@ class BooksViewModel @Inject constructor(
         }
     }
 
+    fun refreshFavData() = viewModelScope.launch {
+        when (val data = _booksData.value) {
+            is BooksDataStatus.Success -> {
+                _booksData.postValue(BooksDataStatus.Loading)
+                val books = data.books
+                for (book in books) {
+                    book.isFav = favouriteBooksRepo.isFavBook(
+                        bookId = book.id ?: StringConstant.EMPTY_STRING,
+                    )
+                }
+                _booksData.postValue(BooksDataStatus.Success(books))
+            }
+
+            else -> Unit
+        }
+    }
+
     fun addRemoveFavBook(book: BooksItem, pos: Int) = viewModelScope.launch {
         val result = favouriteBooksRepo.addRemoveFavBooks(
             FavBook(
@@ -79,6 +96,7 @@ class BooksViewModel @Inject constructor(
                     }
                 }
             }
+
             else -> Unit
         }
     }

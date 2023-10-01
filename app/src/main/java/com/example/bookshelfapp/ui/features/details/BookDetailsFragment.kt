@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -15,25 +16,39 @@ import com.example.bookshelfapp.base.BaseFragment
 import com.example.bookshelfapp.constants.StringConstant
 import com.example.bookshelfapp.data.features.books.repository.remote.model.BooksItem
 import com.example.bookshelfapp.databinding.FragmentBookDetailsBinding
+import com.example.bookshelfapp.ui.features.details.viewmodel.DetailsViewModel
 import com.example.bookshelfapp.utils.findNavControllerSafely
 import com.example.bookshelfapp.utils.setDominantBackground
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class BookDetailsFragment : BaseFragment<FragmentBookDetailsBinding>(
     FragmentBookDetailsBinding::inflate,
 ) {
 
+    private val viewModel: DetailsViewModel by viewModels()
     private val bookDetailsArgs: BookDetailsFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupBookDetails(bookDetailsArgs.books)
         setOnClickListener()
+        setObservers()
+    }
+
+    private fun setObservers() {
+        viewModel.favStatus.observe(viewLifecycleOwner) { isFav ->
+            setFavIconBasedOnData(isFav)
+        }
     }
 
     private fun setOnClickListener() {
         binding.apply {
             backIconIv.setOnClickListener {
                 findNavControllerSafely()?.navigateUp()
+            }
+            favIconIv.setOnClickListener {
+                viewModel.addRemoveFavBook(book = bookDetailsArgs.books)
             }
         }
     }
@@ -66,16 +81,22 @@ class BookDetailsFragment : BaseFragment<FragmentBookDetailsBinding>(
                         }
                     }).load(book.image ?: "").placeholder(R.drawable.ic_default_book)
                         .into(ivBook)
-                    favIconIv.setImageDrawable(
-                        ContextCompat.getDrawable(
-                            context,
-                            if (book.isFav == true) R.drawable.ic_like else R.drawable.ic_unlike,
-                        ),
-                    )
+                    setFavIconBasedOnData(book.isFav ?: false)
                 }
                 tvTitle.text = it.title ?: StringConstant.EMPTY_STRING
                 tvHits.text = it.hits.toString()
             }
+        }
+    }
+
+    private fun setFavIconBasedOnData(isFav: Boolean) {
+        context?.let { context ->
+            binding.favIconIv.setImageDrawable(
+                ContextCompat.getDrawable(
+                    context,
+                    if (isFav) R.drawable.ic_like else R.drawable.ic_unlike,
+                ),
+            )
         }
     }
 }

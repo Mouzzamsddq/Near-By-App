@@ -36,6 +36,7 @@ class BooksFragment : BaseFragment<FragmentBooksBinding>(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.refreshFavData()
         setObservers()
         binding.bookListRv.apply {
             layoutManager = LinearLayoutManager(context)
