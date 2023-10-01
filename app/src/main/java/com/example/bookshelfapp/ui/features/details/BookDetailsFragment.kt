@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
@@ -17,8 +18,10 @@ import com.example.bookshelfapp.constants.StringConstant
 import com.example.bookshelfapp.data.features.books.repository.remote.model.BooksItem
 import com.example.bookshelfapp.databinding.FragmentBookDetailsBinding
 import com.example.bookshelfapp.ui.features.details.viewmodel.DetailsViewModel
+import com.example.bookshelfapp.utils.DateUtils
 import com.example.bookshelfapp.utils.findNavControllerSafely
 import com.example.bookshelfapp.utils.setDominantBackground
+import com.thedeanda.lorem.LoremIpsum
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -84,7 +87,10 @@ class BookDetailsFragment : BaseFragment<FragmentBookDetailsBinding>(
                     setFavIconBasedOnData(book.isFav ?: false)
                 }
                 tvTitle.text = it.title ?: StringConstant.EMPTY_STRING
-                tvHits.text = it.hits.toString()
+                tvHits.text = getString(R.string.hits_text, it.hits)
+                tvUpdatedOn.isVisible = it.lastChapterDate != null
+                tvUpdatedOn.text = getString(R.string.updated_on, DateUtils.timestampToDate(it.lastChapterDate ?: 0L))
+                tvSummary.text = LoremIpsum.getInstance().getParagraphs(10, 20)
             }
         }
     }

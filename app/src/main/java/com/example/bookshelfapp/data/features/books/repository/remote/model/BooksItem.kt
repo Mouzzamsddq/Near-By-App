@@ -15,7 +15,7 @@ data class BooksItem(
     @SerializedName("image")
     val image: String?,
     @SerializedName("lastChapterDate")
-    val lastChapterDate: Int?,
+    val lastChapterDate: Long?,
     @SerializedName("title")
     val title: String?,
     var isFav: Boolean?
