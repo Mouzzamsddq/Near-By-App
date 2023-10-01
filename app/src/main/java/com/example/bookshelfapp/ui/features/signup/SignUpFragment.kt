@@ -17,18 +17,24 @@ import com.example.bookshelfapp.ui.features.signup.viewmodel.SignUpViewModel
 import com.example.bookshelfapp.utils.JsonUtils
 import com.example.bookshelfapp.utils.findNavControllerSafely
 import com.example.bookshelfapp.utils.hide
+import com.example.bookshelfapp.utils.hideKeyboard
 import com.example.bookshelfapp.utils.navigateSafe
 import com.example.bookshelfapp.utils.setBackground
 import com.example.bookshelfapp.utils.show
+import com.example.bookshelfapp.utils.showToast
+import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
 
+@AndroidEntryPoint
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>(
     FragmentSignUpBinding::inflate,
 ) {
 
     private val viewModel: SignUpViewModel by viewModels()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.updateSelectedCountry(selectedCountry = getString(R.string.select_a_country))
         setupSpinner()
         setOnClickListener()
         addOnTextChangeListener()
@@ -52,6 +58,28 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(
                 is SignUpViewModel.FieldsValidationStatus.PasswordError -> {
                     changeSignUpButtonState()
                     changeStateOfPasswordError(show = true, it.errorMessage)
+                }
+            }
+        }
+
+        viewModel.signUpStatus.observe(viewLifecycleOwner) {
+            when (it) {
+                is SignUpViewModel.SignUpStatus.Success -> {
+                    showHideLoaderView(show = false)
+                    context.showToast(message = getString(R.string.signup_successful))
+                    findNavControllerSafely()?.navigateSafe(
+                        action = R.id.action_sign_up_fragment_to_signInFragment,
+                        args = null,
+                    )
+                }
+
+                is SignUpViewModel.SignUpStatus.Error -> {
+                    showHideLoaderView(show = false)
+                    context.showToast(it.errorMessage)
+                }
+
+                is SignUpViewModel.SignUpStatus.Loading -> {
+                    showHideLoaderView(show = true)
                 }
             }
         }
@@ -129,6 +157,11 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(
                 ) {
                     if (position != 0) {
                         setSelection(position)
+                        viewModel.updateSelectedCountry(
+                            selectedCountry = parentView.getItemAtPosition(
+                                position,
+                            ).toString(),
+                        )
                     }
                 }
 
@@ -157,6 +190,18 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(
                 findNavControllerSafely()?.navigateSafe(
                     action = R.id.action_sign_up_fragment_to_signInFragment,
                     args = null,
+                )
+            }
+            signUpBtn.setOnClickListener {
+                mainActivity?.hideKeyboard()
+                val selectedCountryPos = countrySpinner.selectedItemPosition
+                if (selectedCountryPos == 0) {
+                    context.showToast(message = getString(R.string.select_a_country))
+                    return@setOnClickListener
+                }
+                viewModel.performSignUp(
+                    name = nameEt.text.toString(),
+                    password = passwordEt.text.toString(),
                 )
             }
         }

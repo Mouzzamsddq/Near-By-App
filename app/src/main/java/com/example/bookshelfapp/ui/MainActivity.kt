@@ -2,6 +2,7 @@ package com.example.bookshelfapp.ui
 
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -67,5 +68,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
             }.build(),
             navigatorExtras = null,
         )
+    }
+
+    fun showHideLoaderView(show: Boolean) {
+        binding.loaderView.container.isVisible = show
     }
 }

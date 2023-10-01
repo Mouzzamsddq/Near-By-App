@@ -27,4 +27,6 @@
     <string name="please_enter_valid_name">Please enter a valid name…!</string>
     <string name="please_enter_valid_password">Please enter a valid password…!</string>
     <string name="password_validity_error">Password must have at least 8 characters with one number, special characters, one lowercase letter, and one uppercase letter…!</string>
+    <string name="please_select_country">Please select country...!</string>
+    <string name="signup_successful">Signup successful</string>
 </resources>

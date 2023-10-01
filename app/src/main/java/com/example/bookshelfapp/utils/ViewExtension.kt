@@ -1,8 +1,11 @@
 package com.example.bookshelfapp.utils
 
+import android.app.Activity
 import android.content.Context
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 
@@ -46,3 +49,8 @@ fun List<View>.hide() {
     }
 }
 
+fun Activity.hideKeyboard() =
+    WindowInsetsControllerCompat(
+        window,
+        window.decorView,
+    ).hide(WindowInsetsCompat.Type.ime())
