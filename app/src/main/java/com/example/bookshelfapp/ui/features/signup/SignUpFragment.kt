@@ -6,7 +6,6 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import com.example.bookshelfapp.R
 import com.example.bookshelfapp.base.BaseFragment

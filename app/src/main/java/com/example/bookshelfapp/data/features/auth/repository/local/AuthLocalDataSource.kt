@@ -1,6 +1,8 @@
 package com.example.bookshelfapp.data.features.auth.repository.local
 
+import com.example.bookshelfapp.base.LocalStorage
 import com.example.bookshelfapp.base.Resource
+import com.example.bookshelfapp.constants.LocalStorageConstants
 import com.example.bookshelfapp.constants.StringConstant
 import com.example.bookshelfapp.data.features.auth.repository.local.dao.UsersDao
 import com.example.bookshelfapp.data.features.auth.repository.local.entity.Users
@@ -8,6 +10,7 @@ import javax.inject.Inject
 
 class AuthLocalDataSource @Inject constructor(
     private val usersDao: UsersDao,
+    private val localStorage: LocalStorage
 ) {
 
     suspend fun performSignUp(users: Users): Resource<Boolean> {
@@ -32,5 +35,9 @@ class AuthLocalDataSource @Inject constructor(
         } else {
             Resource.success(data = true)
         }
+    }
+
+    fun saveUserAuthenticated() {
+        localStorage.setBoolean(LocalStorageConstants.IS_USER_AUTHENTICATED, true)
     }
 }

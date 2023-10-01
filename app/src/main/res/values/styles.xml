@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ShapeAppearanceOverlay.App.WithCornerRadius6" parent="">
+        <item name="cornerSize">6%</item>
+    </style>
+
+</resources>

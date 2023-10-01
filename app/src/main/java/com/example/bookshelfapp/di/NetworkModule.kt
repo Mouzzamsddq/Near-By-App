@@ -3,6 +3,7 @@ package com.example.bookshelfapp.di
 import com.example.bookshelfapp.BuildConfig
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.example.bookshelfapp.data.features.books.repository.remote.api.BooksApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -50,7 +51,11 @@ object NetworkModule {
     fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gson))
-            .baseUrl("")
+            .baseUrl("https://www.jsonkeeper.com/")
             .client(okHttpClient)
             .build()
+
+    @Provides
+    fun provideBooksApiService(retrofit: Retrofit): BooksApiService =
+        retrofit.create(BooksApiService::class.java)
 }
