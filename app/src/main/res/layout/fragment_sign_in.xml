@@ -86,21 +86,21 @@
 
 
             <TextView
-                android:id="@+id/email_or_phone_tv"
+                android:id="@+id/name_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_24"
                 android:layout_marginTop="@dimen/margin_32"
                 android:fontFamily="@font/poppins_medium"
                 android:letterSpacing="0.01"
-                android:text="@string/email"
+                android:text="@string/name"
                 android:textColor="?secondaryTextColor"
                 android:textSize="@dimen/size_12"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/dont_tv" />
 
             <EditText
-                android:id="@+id/email_et"
+                android:id="@+id/name_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_20"
@@ -108,7 +108,7 @@
                 android:layout_marginEnd="@dimen/margin_20"
                 android:background="@drawable/login_et_background_selector"
                 android:fontFamily="@font/poppins_medium"
-                android:hint="@string/enter_email_here"
+                android:hint="@string/enter_name_here"
                 android:inputType="textEmailAddress"
                 android:letterSpacing="0.01"
                 android:padding="@dimen/margin_12"
@@ -118,7 +118,7 @@
                 android:textSize="@dimen/size_14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/email_or_phone_tv" />
+                app:layout_constraintTop_toBottomOf="@id/name_tv" />
 
             <ImageView
                 android:id="@+id/warning_iv"
@@ -129,7 +129,7 @@
                 android:src="@drawable/ic_warning"
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/email_et" />
+                app:layout_constraintTop_toBottomOf="@id/name_et" />
 
             <TextView
                 android:id="@+id/error_reason_tv"

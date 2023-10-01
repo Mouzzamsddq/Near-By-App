@@ -43,6 +43,7 @@ android {
 }
 
 dependencies {
+    implementation("androidx.preference:preference-ktx:1.2.1")
     val navVersion = "2.5.3"
     val lifecycleVersion = "2.6.2"
     val fragmentVersion = "1.6.1"
