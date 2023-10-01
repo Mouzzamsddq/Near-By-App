@@ -1,3 +1,5 @@
+import java.util.regex.Pattern.compile
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -94,6 +96,10 @@ dependencies {
     // hilt for dependency injection
     implementation("com.google.dagger:hilt-android:2.44.2")
     kapt("com.google.dagger:hilt-android-compiler:2.44.2")
+
+    // palette
+    implementation("androidx.palette:palette-ktx:1.0.0")
+    implementation("com.thedeanda:lorem:2.2")
 }
 
 kapt {
