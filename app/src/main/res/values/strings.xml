@@ -36,4 +36,8 @@
     <string name="bookmark">bookmark\n</string>
     <string name="book_detail">Book Details</string>
     <string name="no_fav_message">You haven\'t marked any book as fav</string>
+    <string name="logout">Logout</string>
+    <string name="are_you_sure_to_log_out">Are you sure to log out?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
 </resources>
