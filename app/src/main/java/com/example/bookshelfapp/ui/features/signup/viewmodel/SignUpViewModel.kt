@@ -28,6 +28,8 @@ class SignUpViewModel @Inject constructor(
     val signUpStatus: LiveData<SignUpStatus> = _signUpStatus
 
     private var selectedCountry = StringConstant.EMPTY_STRING
+    private var isNameValid = false
+    private var isPasswordValid = false
 
     fun performSignUp(name: String, password: String) = viewModelScope.launch {
         _signUpStatus.postValue(SignUpStatus.Loading)
@@ -62,12 +64,29 @@ class SignUpViewModel @Inject constructor(
         this.selectedCountry = selectedCountry
     }
 
-    fun checkValidation(name: String?, password: String?, context: Context) {
+    fun checkNameValidation(name: String?, context: Context) {
         if (name.isNullOrBlank()) {
-            _fieldValidationStatus.postValue(FieldsValidationStatus.NameError(context.getString(R.string.please_enter_valid_name)))
-            return
+            isNameValid = false
+            _fieldValidationStatus.postValue(
+                FieldsValidationStatus.NameError(
+                    context.getString(
+                        R.string.please_enter_valid_name,
+                    ),
+                ),
+            )
+        } else {
+            isNameValid = true
+            if (isPasswordValid) {
+                _fieldValidationStatus.postValue(FieldsValidationStatus.Success)
+            } else {
+                _fieldValidationStatus.postValue(FieldsValidationStatus.NameSuccess)
+            }
         }
+    }
+
+    fun checkPasswordValidation(password: String?, context: Context) {
         if (password.isNullOrBlank()) {
+            isPasswordValid = false
             _fieldValidationStatus.postValue(
                 FieldsValidationStatus.PasswordError(
                     context.getString(
@@ -75,11 +94,15 @@ class SignUpViewModel @Inject constructor(
                     ),
                 ),
             )
-            return
-        }
-        if (PatternUtils.isValidPassword(password)) {
-            _fieldValidationStatus.postValue(FieldsValidationStatus.Success)
+        } else if (PatternUtils.isValidPassword(password)) {
+            isPasswordValid = true
+            if (isNameValid) {
+                _fieldValidationStatus.postValue(FieldsValidationStatus.Success)
+            } else {
+                _fieldValidationStatus.postValue(FieldsValidationStatus.PasswordSuccess)
+            }
         } else {
+            isPasswordValid = false
             _fieldValidationStatus.postValue(
                 FieldsValidationStatus.PasswordError(
                     context.getString(
@@ -101,6 +124,6 @@ class SignUpViewModel @Inject constructor(
         data class PasswordError(val errorMessage: String) : FieldsValidationStatus()
         object Success : FieldsValidationStatus()
         object NameSuccess : FieldsValidationStatus()
-        object PasswordSuccess: FieldsValidationStatus()
+        object PasswordSuccess : FieldsValidationStatus()
     }
 }
