@@ -89,9 +89,11 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(
                     changeSignUpButtonState()
                     changeStateOfPasswordError(show = true, it.errorMessage)
                 }
+
                 is SignUpViewModel.FieldsValidationStatus.NameSuccess -> {
                     changeStateOfNameError(show = false)
                 }
+
                 is SignUpViewModel.FieldsValidationStatus.PasswordSuccess -> {
                     changeStateOfPasswordError(show = false)
                 }
