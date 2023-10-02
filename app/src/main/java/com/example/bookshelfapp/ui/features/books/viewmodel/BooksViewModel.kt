@@ -10,6 +10,9 @@ import com.example.bookshelfapp.data.features.books.repository.BookRepo
 import com.example.bookshelfapp.data.features.books.repository.remote.model.BooksItem
 import com.example.bookshelfapp.data.features.favourites.repository.FavouriteBooksRepo
 import com.example.bookshelfapp.data.features.favourites.repository.local.FavBook
+import com.example.bookshelfapp.ui.features.books.comparator.BooksItemHitsComparator
+import com.example.bookshelfapp.ui.features.books.comparator.BooksItemIsFavComparator
+import com.example.bookshelfapp.ui.features.books.comparator.BooksItemTitleComparator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -93,6 +96,30 @@ class BooksViewModel @Inject constructor(
                         }
 
                         else -> Unit
+                    }
+                }
+            }
+
+            else -> Unit
+        }
+    }
+
+    fun performSort(sortPos: Int) {
+        _booksData.postValue(BooksDataStatus.Loading)
+        when (val data = _booksData.value) {
+            is BooksDataStatus.Success -> {
+                val books = data.books
+                when (sortPos) {
+                    1 -> {
+                        _booksData.postValue(BooksDataStatus.Success(books = books.sortedWith(BooksItemTitleComparator())))
+                    }
+
+                    2 -> {
+                        _booksData.postValue(BooksDataStatus.Success(books = books.sortedWith(BooksItemHitsComparator())))
+                    }
+
+                    3 -> {
+                        _booksData.postValue(BooksDataStatus.Success(books = books.sortedWith(BooksItemIsFavComparator())))
                     }
                 }
             }
