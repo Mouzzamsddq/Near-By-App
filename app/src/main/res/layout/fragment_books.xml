@@ -6,13 +6,82 @@
     android:layout_height="match_parent"
     tools:context=".ui.features.books.BooksFragment">
 
+    <TextView
+        android:id="@+id/tv_sort_by"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_20"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="@string/sort_by"
+        android:textColor="?attr/primaryTextColor"
+        android:textSize="@dimen/size_22sp"
+        app:layout_constraintBottom_toBottomOf="@id/sort_spinner_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/sort_spinner_layout" />
+
+    <FrameLayout
+        android:id="@+id/sort_spinner_layout"
+        android:layout_width="@dimen/margin_0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_20"
+        android:layout_marginTop="@dimen/margin_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_sort_by"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Spinner
+            android:id="@+id/sort_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_et_background_selector"
+            android:padding="@dimen/margin_10"
+            android:spinnerMode="dropdown" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:src="@drawable/ic_down_arrow" />
+
+    </FrameLayout>
+
+
+    <TextView
+        android:id="@+id/tv_ascendingOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_10"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="@string/ascending_order"
+        android:textColor="?attr/primaryTextColor"
+        android:textSize="@dimen/size_16sp"
+        app:layout_constraintStart_toStartOf="@id/tv_sort_by"
+        app:layout_constraintTop_toBottomOf="@id/sort_spinner_layout" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/order_switch"
+        android:thumbTint="?colorPrimary"
+        android:trackTint="?colorPrimary"
+        android:textColor="?colorPrimary"
+        app:layout_constraintStart_toEndOf="@id/tv_ascendingOrder"
+        app:layout_constraintTop_toTopOf="@id/tv_ascendingOrder"
+        app:layout_constraintBottom_toBottomOf="@id/tv_ascendingOrder"
+        android:layout_marginStart="@dimen/margin_20"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/book_list_rv"
         android:layout_width="match_parent"
         android:layout_height="@dimen/margin_0dp"
+        android:layout_marginBottom="@dimen/margin_10"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_ascendingOrder"
         tools:listitem="@layout/book_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

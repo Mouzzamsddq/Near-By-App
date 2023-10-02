@@ -2,8 +2,14 @@ package com.example.bookshelfapp.ui.features.books
 
 import android.os.Bundle
 import android.view.View
+import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.ArrayAdapter
+import android.widget.CompoundButton
+import android.widget.CompoundButton.OnCheckedChangeListener
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.bookshelfapp.R
 import com.example.bookshelfapp.base.BaseFragment
 import com.example.bookshelfapp.databinding.FragmentBooksBinding
 import com.example.bookshelfapp.ui.features.books.adapter.BooksAdapter
@@ -38,9 +44,38 @@ class BooksFragment : BaseFragment<FragmentBooksBinding>(
         super.onViewCreated(view, savedInstanceState)
         viewModel.refreshFavData()
         setObservers()
+        setupSortSpinner()
         binding.bookListRv.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = booksAdapter
+        }
+        binding.orderSwitch.setOnCheckedChangeListener { p0, isChecked ->
+            viewModel.performSort(binding.sortSpinner.selectedItemPosition, isChecked)
+        }
+    }
+
+    private fun setupSortSpinner() {
+        binding.sortSpinner.apply {
+            val sortList = resources.getStringArray(R.array.sort_list)
+            val arrayAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_item, sortList)
+            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            adapter = arrayAdapter
+
+            onItemSelectedListener = object : OnItemSelectedListener {
+                override fun onItemSelected(
+                    parentView: AdapterView<*>,
+                    selectedItemView: View,
+                    position: Int,
+                    id: Long,
+                ) {
+                    if (position != 0) {
+                        viewModel.performSort(position, binding.orderSwitch.isChecked)
+                    }
+                }
+
+                override fun onNothingSelected(parentView: AdapterView<*>?) {
+                }
+            }
         }
     }
 
