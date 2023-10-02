@@ -47,6 +47,30 @@
     </FrameLayout>
 
 
+    <TextView
+        android:id="@+id/tv_ascendingOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_10"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="@string/ascending_order"
+        android:textColor="?attr/primaryTextColor"
+        android:textSize="@dimen/size_16sp"
+        app:layout_constraintStart_toStartOf="@id/tv_sort_by"
+        app:layout_constraintTop_toBottomOf="@id/sort_spinner_layout" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/order_switch"
+        android:textColor="?colorPrimary"
+        app:layout_constraintStart_toEndOf="@id/tv_ascendingOrder"
+        app:layout_constraintTop_toTopOf="@id/tv_ascendingOrder"
+        app:layout_constraintBottom_toBottomOf="@id/tv_ascendingOrder"
+        android:layout_marginStart="@dimen/margin_20"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/book_list_rv"
         android:layout_width="match_parent"
@@ -55,7 +79,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sort_spinner_layout"
+        app:layout_constraintTop_toBottomOf="@id/tv_ascendingOrder"
         tools:listitem="@layout/book_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -43,6 +43,7 @@
     <string name="hits_text">Hits: %1$d</string>
     <string name="updated_on">Updated on: %s</string>
     <string name="sort_by">Sort By:</string>
+    <string name="ascending_order">Ascending Order:</string>
     <string-array name="sort_list">
         <item>Select Sorting</item>
         <item>Title</item>

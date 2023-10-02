@@ -5,6 +5,8 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
+import android.widget.CompoundButton
+import android.widget.CompoundButton.OnCheckedChangeListener
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bookshelfapp.R
@@ -47,6 +49,9 @@ class BooksFragment : BaseFragment<FragmentBooksBinding>(
             layoutManager = LinearLayoutManager(context)
             adapter = booksAdapter
         }
+        binding.orderSwitch.setOnCheckedChangeListener { p0, isChecked ->
+            viewModel.performSort(binding.sortSpinner.selectedItemPosition, isChecked)
+        }
     }
 
     private fun setupSortSpinner() {
@@ -64,7 +69,7 @@ class BooksFragment : BaseFragment<FragmentBooksBinding>(
                     id: Long,
                 ) {
                     if (position != 0) {
-                        viewModel.performSort(position)
+                        viewModel.performSort(position, binding.orderSwitch.isChecked)
                     }
                 }
 

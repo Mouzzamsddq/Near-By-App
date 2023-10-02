@@ -104,22 +104,42 @@ class BooksViewModel @Inject constructor(
         }
     }
 
-    fun performSort(sortPos: Int) {
-        _booksData.postValue(BooksDataStatus.Loading)
+    fun performSort(sortPos: Int, ascendingOrder: Boolean) {
         when (val data = _booksData.value) {
             is BooksDataStatus.Success -> {
                 val books = data.books
                 when (sortPos) {
                     1 -> {
-                        _booksData.postValue(BooksDataStatus.Success(books = books.sortedWith(BooksItemTitleComparator())))
+                        _booksData.postValue(BooksDataStatus.Loading)
+                        _booksData.postValue(
+                            BooksDataStatus.Success(
+                                books = books.sortedWith(
+                                    BooksItemTitleComparator(ascendingOrder = ascendingOrder),
+                                ),
+                            ),
+                        )
                     }
 
                     2 -> {
-                        _booksData.postValue(BooksDataStatus.Success(books = books.sortedWith(BooksItemHitsComparator())))
+                        _booksData.postValue(BooksDataStatus.Loading)
+                        _booksData.postValue(
+                            BooksDataStatus.Success(
+                                books = books.sortedWith(
+                                    BooksItemHitsComparator(ascendingOrder = ascendingOrder),
+                                ),
+                            ),
+                        )
                     }
 
                     3 -> {
-                        _booksData.postValue(BooksDataStatus.Success(books = books.sortedWith(BooksItemIsFavComparator())))
+                        _booksData.postValue(BooksDataStatus.Loading)
+                        _booksData.postValue(
+                            BooksDataStatus.Success(
+                                books = books.sortedWith(
+                                    BooksItemIsFavComparator(ascendingOrder = ascendingOrder),
+                                ),
+                            ),
+                        )
                     }
                 }
             }
