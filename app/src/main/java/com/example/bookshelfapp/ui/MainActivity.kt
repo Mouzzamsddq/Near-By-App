@@ -2,6 +2,7 @@ package com.example.bookshelfapp.ui
 
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
@@ -27,6 +28,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         binding.bottomNavView.setupWithNavController(navController)
         addDestinationChangeListener()

@@ -28,4 +28,10 @@
         <item name="textEntryBackground">@color/secondary_black</item>
         <item name="transparentBackground">@color/transparent_white</item>
     </style>
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/primary_black</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_icon_round</item>
+        <item name="windowSplashScreenAnimationDuration">300</item>
+        <item name="postSplashScreenTheme">@style/Theme.BookShelfApp</item>  # Required.
+    </style>
 </resources>
