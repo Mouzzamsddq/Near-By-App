@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class AuthLocalDataSource @Inject constructor(
     private val usersDao: UsersDao,
-    private val localStorage: LocalStorage
+    private val localStorage: LocalStorage,
 ) {
 
     suspend fun performSignUp(users: Users): Resource<Boolean> {
@@ -27,7 +27,7 @@ class AuthLocalDataSource @Inject constructor(
 
     suspend fun performSignIn(name: String, password: String): Resource<Boolean> {
         if (!usersDao.isUserAlreadyExist(name)) {
-            return Resource.error(message = StringConstant.ENTER_VALID_NAME)
+            return Resource.error(message = StringConstant.USER_NOT_REGISTERED)
         }
         val isValid = usersDao.performSignIn(username = name, password = password)
         return if (isValid == 0) {
@@ -42,6 +42,6 @@ class AuthLocalDataSource @Inject constructor(
     }
 
     fun logout() {
-       localStorage.setBoolean(LocalStorageConstants.IS_USER_AUTHENTICATED, false)
+        localStorage.setBoolean(LocalStorageConstants.IS_USER_AUTHENTICATED, false)
     }
 }

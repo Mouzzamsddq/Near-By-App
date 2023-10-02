@@ -26,11 +26,13 @@ class SignInViewModel @Inject constructor(
 
     private val _signInStatus = MutableLiveData<SignInStatus>()
     val signInStatus: LiveData<SignInStatus> = _signInStatus
+    private var isNameValid = false
+    private var isPasswordValid = false
 
     fun performSignIn(name: String, password: String) = viewModelScope.launch {
         _signInStatus.postValue(SignInStatus.Loading)
         delay(1000)
-        val result = authRepo.performSignIn(name = name, password = password)
+        val result = authRepo.performSignIn(name = name.trim().lowercase(), password = password)
         when (result.status) {
             Resource.Status.SUCCESS -> {
                 authRepo.saveUserAuthenticated()
@@ -51,8 +53,9 @@ class SignInViewModel @Inject constructor(
         }
     }
 
-    fun checkValidation(name: String?, password: String?, context: Context) {
+    fun checkNameValidation(name: String?, context: Context) {
         if (name.isNullOrBlank()) {
+            isNameValid = false
             _fieldValidationStatus.postValue(
                 SignUpViewModel.FieldsValidationStatus.NameError(
                     context.getString(
@@ -60,9 +63,19 @@ class SignInViewModel @Inject constructor(
                     ),
                 ),
             )
-            return
+        } else {
+            isNameValid = true
+            if (isPasswordValid) {
+                _fieldValidationStatus.postValue(SignUpViewModel.FieldsValidationStatus.Success)
+            } else {
+                _fieldValidationStatus.postValue(SignUpViewModel.FieldsValidationStatus.NameSuccess)
+            }
         }
+    }
+
+    fun checkPasswordValidation(password: String?, context: Context) {
         if (password.isNullOrBlank()) {
+            isPasswordValid = false
             _fieldValidationStatus.postValue(
                 SignUpViewModel.FieldsValidationStatus.PasswordError(
                     context.getString(
@@ -70,9 +83,14 @@ class SignInViewModel @Inject constructor(
                     ),
                 ),
             )
-            return
+        } else {
+            isPasswordValid = true
+            if (isNameValid) {
+                _fieldValidationStatus.postValue(SignUpViewModel.FieldsValidationStatus.Success)
+            } else {
+                _fieldValidationStatus.postValue(SignUpViewModel.FieldsValidationStatus.PasswordSuccess)
+            }
         }
-        _fieldValidationStatus.postValue(SignUpViewModel.FieldsValidationStatus.Success)
     }
 
     sealed class SignInStatus {
