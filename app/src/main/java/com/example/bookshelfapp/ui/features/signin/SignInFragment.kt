@@ -101,6 +101,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(
                 is SignInViewModel.SignInStatus.Success -> {
                     showHideLoaderView(show = false)
                     context.showToast(message = getString(R.string.login_successful))
+                    findNavControllerSafely()?.clearBackStack(R.id.signInFragment)
                     findNavControllerSafely()?.navigateSafe(
                         action = R.id.action_sign_in_fragment_to_homeFragment,
                     )

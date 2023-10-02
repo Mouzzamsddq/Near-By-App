@@ -31,15 +31,38 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
         addDestinationChangeListener()
         setObservers()
         viewModel.checkIsUserAuthenticated()
+        binding.bottomNavView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.booksFragment -> {
+                    navController.navigate(R.id.booksFragment)
+                    return@setOnItemSelectedListener true
+                }
+
+                R.id.favouritesBookFragment -> {
+                    navController.navigate(R.id.favouritesBookFragment)
+                    return@setOnItemSelectedListener true
+                }
+                // Add more cases for other menu items
+                R.id.accountFragment -> {
+                    navController.navigate(R.id.accountFragment)
+                    return@setOnItemSelectedListener true
+                }
+
+                else -> return@setOnItemSelectedListener true
+            }
+        }
     }
 
     private fun setObservers() {
         viewModel.isUserAuthenticated.observe(this@MainActivity) { isAuthenticated ->
+            val inflater = navController.navInflater
+            val graph = inflater.inflate(R.navigation.nav_graph)
             if (isAuthenticated) {
-                navigationToFragment(id = R.id.booksFragment, arguments = null)
+                graph.setStartDestination(R.id.booksFragment)
             } else {
-                navigationToFragment(id = R.id.signInFragment, arguments = null)
+                graph.setStartDestination(R.id.signInFragment)
             }
+            navController.graph = graph
         }
     }
 
@@ -54,20 +77,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
                 else -> binding.bottomNavView.gone()
             }
         }
-    }
-
-    private fun navigationToFragment(id: Int, arguments: Bundle?) {
-        navController.navigate(
-            resId = id,
-            args = arguments,
-            navOptions = NavOptions.Builder().apply {
-                setEnterAnim(R.anim.slide_in_right)
-                setExitAnim(R.anim.slide_out_left)
-                setPopEnterAnim(R.anim.slide_in_left)
-                setPopExitAnim(R.anim.slide_out_right)
-            }.build(),
-            navigatorExtras = null,
-        )
     }
 
     fun showHideLoaderView(show: Boolean) {
