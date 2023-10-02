@@ -100,5 +100,7 @@ class SignUpViewModel @Inject constructor(
         data class NameError(val errorMessage: String) : FieldsValidationStatus()
         data class PasswordError(val errorMessage: String) : FieldsValidationStatus()
         object Success : FieldsValidationStatus()
+        object NameSuccess : FieldsValidationStatus()
+        object PasswordSuccess: FieldsValidationStatus()
     }
 }

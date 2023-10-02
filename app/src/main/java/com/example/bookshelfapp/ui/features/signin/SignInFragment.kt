@@ -47,9 +47,8 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(
                 override fun afterTextChanged(name: Editable?) {
                     binding.apply {
                         context?.let {
-                            viewModel.checkValidation(
+                            viewModel.checkNameValidation(
                                 name = name.toString(),
-                                password = passwordEt.text.toString(),
                                 context = it,
                             )
                         }
@@ -64,8 +63,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(
                 override fun afterTextChanged(password: Editable?) {
                     binding.apply {
                         context?.let {
-                            viewModel.checkValidation(
-                                name = nameEt.text.toString(),
+                            viewModel.checkPasswordValidation(
                                 password = password.toString(),
                                 context = it,
                             )
@@ -93,6 +91,12 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(
                 is SignUpViewModel.FieldsValidationStatus.PasswordError -> {
                     changeSignInButtonState()
                     changeStateOfPasswordError(show = true, it.errorMessage)
+                }
+                is SignUpViewModel.FieldsValidationStatus.NameSuccess -> {
+                    changeStateOfNameError(show = false)
+                }
+                is SignUpViewModel.FieldsValidationStatus.PasswordSuccess -> {
+                    changeStateOfPasswordError(show = false)
                 }
             }
         }

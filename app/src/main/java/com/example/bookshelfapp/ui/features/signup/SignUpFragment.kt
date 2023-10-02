@@ -58,6 +58,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(
                     changeSignUpButtonState()
                     changeStateOfPasswordError(show = true, it.errorMessage)
                 }
+                else -> Unit
             }
         }
 
