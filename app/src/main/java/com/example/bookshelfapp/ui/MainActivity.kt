@@ -3,12 +3,13 @@ package com.example.bookshelfapp.ui
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
-import androidx.navigation.NavOptions
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.bookshelfapp.R
 import com.example.bookshelfapp.base.BaseActivity
 import com.example.bookshelfapp.databinding.ActivityMainBinding
+import com.example.bookshelfapp.ui.features.signin.SignInFragment
 import com.example.bookshelfapp.utils.gone
 import com.example.bookshelfapp.utils.show
 import dagger.hilt.android.AndroidEntryPoint
@@ -82,5 +83,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
 
     fun showHideLoaderView(show: Boolean) {
         binding.loaderView.container.isVisible = show
+    }
+
+    override fun onBackPressed() {
+        val navHostFragment: Fragment? =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
+        val currentFragment = navHostFragment?.childFragmentManager?.fragments?.get(0)
+        if (navHostFragment != null && currentFragment is SignInFragment) {
+            finish()
+        } else {
+            super.onBackPressed()
+        }
     }
 }
