@@ -30,48 +30,48 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(
     private val viewModel: SignInViewModel by viewModels()
     private var isPasswordVisible = false
 
+    val nameTextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+            binding.apply {
+                context?.let {
+                    viewModel.checkNameValidation(
+                        name = s.toString().trim(),
+                        context = it,
+                    )
+                }
+            }
+        }
+    }
+
+    val passwordTextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+            binding.apply {
+                context?.let {
+                    viewModel.checkPasswordValidation(
+                        password = s.toString().trim(),
+                        context = it,
+                    )
+                }
+            }
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setOnClickListeners()
         setObservers()
-        addOnTextChangeListener()
-    }
-
-    private fun addOnTextChangeListener() {
-        binding.apply {
-            nameEt.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
-
-                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
-
-                override fun afterTextChanged(name: Editable?) {
-                    binding.apply {
-                        context?.let {
-                            viewModel.checkNameValidation(
-                                name = name.toString(),
-                                context = it,
-                            )
-                        }
-                    }
-                }
-            })
-            passwordEt.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
-
-                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
-
-                override fun afterTextChanged(password: Editable?) {
-                    binding.apply {
-                        context?.let {
-                            viewModel.checkPasswordValidation(
-                                password = password.toString(),
-                                context = it,
-                            )
-                        }
-                    }
-                }
-            })
-        }
     }
 
     private fun setObservers() {
@@ -92,9 +92,11 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(
                     changeSignInButtonState()
                     changeStateOfPasswordError(show = true, it.errorMessage)
                 }
+
                 is SignUpViewModel.FieldsValidationStatus.NameSuccess -> {
                     changeStateOfNameError(show = false)
                 }
+
                 is SignUpViewModel.FieldsValidationStatus.PasswordSuccess -> {
                     changeStateOfPasswordError(show = false)
                 }
@@ -185,6 +187,22 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(
                 )
                 isEnabled = isEnable
             }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.apply {
+            nameEt.removeTextChangedListener(nameTextWatcher)
+            passwordEt.removeTextChangedListener(passwordTextWatcher)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.apply {
+            nameEt.addTextChangedListener(nameTextWatcher)
+            passwordEt.addTextChangedListener(passwordTextWatcher)
         }
     }
 }

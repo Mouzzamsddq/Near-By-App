@@ -27,7 +27,7 @@ class AuthLocalDataSource @Inject constructor(
 
     suspend fun performSignIn(name: String, password: String): Resource<Boolean> {
         if (!usersDao.isUserAlreadyExist(name)) {
-            return Resource.error(message = StringConstant.ENTER_VALID_NAME)
+            return Resource.error(message = StringConstant.USER_NOT_REGISTERED)
         }
         val isValid = usersDao.performSignIn(username = name, password = password)
         return if (isValid == 0) {
