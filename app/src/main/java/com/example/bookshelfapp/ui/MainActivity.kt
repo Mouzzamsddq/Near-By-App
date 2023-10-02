@@ -68,6 +68,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(
 
     private fun addDestinationChangeListener() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
+            showHideLoaderView(show = false)
             when (destination.label) {
                 getString(R.string.home),
                 getString(R.string.favourites),

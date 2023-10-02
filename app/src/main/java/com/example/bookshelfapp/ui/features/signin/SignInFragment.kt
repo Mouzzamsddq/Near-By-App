@@ -148,7 +148,10 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(
         }
     }
 
-    private fun changeStateOfNameError(show: Boolean, errorMessage: String = StringConstant.EMPTY_STRING) {
+    private fun changeStateOfNameError(
+        show: Boolean,
+        errorMessage: String = StringConstant.EMPTY_STRING,
+    ) {
         binding.apply {
             listOf(warningIv, errorReasonTv).apply {
                 if (show) show() else hide()
@@ -157,7 +160,10 @@ class SignInFragment : BaseFragment<FragmentSignInBinding>(
         }
     }
 
-    private fun changeStateOfPasswordError(show: Boolean, errorMessage: String = StringConstant.EMPTY_STRING) {
+    private fun changeStateOfPasswordError(
+        show: Boolean,
+        errorMessage: String = StringConstant.EMPTY_STRING,
+    ) {
         binding.apply {
             listOf(pwdWarningIv, pwdErrorReasonTv).apply {
                 if (show) show() else hide()

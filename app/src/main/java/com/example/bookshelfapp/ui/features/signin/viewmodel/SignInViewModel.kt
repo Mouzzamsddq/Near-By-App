@@ -30,7 +30,7 @@ class SignInViewModel @Inject constructor(
     fun performSignIn(name: String, password: String) = viewModelScope.launch {
         _signInStatus.postValue(SignInStatus.Loading)
         delay(1000)
-        val result = authRepo.performSignIn(name = name, password = password)
+        val result = authRepo.performSignIn(name = name.trim().lowercase(), password = password)
         when (result.status) {
             Resource.Status.SUCCESS -> {
                 authRepo.saveUserAuthenticated()

@@ -200,7 +200,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(
                     return@setOnClickListener
                 }
                 viewModel.performSignUp(
-                    name = nameEt.text.toString(),
+                    name = nameEt.text.toString().trim().lowercase(),
                     password = passwordEt.text.toString(),
                 )
             }
