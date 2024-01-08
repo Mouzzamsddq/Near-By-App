@@ -100,11 +100,14 @@ dependencies {
     // palette
     implementation("androidx.palette:palette-ktx:1.0.0")
 
-    // lorem text
-    implementation("com.thedeanda:lorem:2.2")
 
     // splash screen api
     implementation("androidx.core:core-splashscreen:1.0.1")
+
+    // fused location provider for current location
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+
+
 }
 
 kapt {

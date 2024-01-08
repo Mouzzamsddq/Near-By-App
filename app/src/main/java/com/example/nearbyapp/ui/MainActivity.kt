@@ -1,15 +1,19 @@
 package com.example.nearbyapp.ui
 
+import LocationManager
 import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.fragment.NavHostFragment
 import com.example.nearbyapp.base.BaseActivity
 import com.example.nearbyapp.databinding.ActivityMainBinding
+import com.example.nearbyapp.utils.CurrentLocationCallback
+import com.example.nearbyapp.utils.LatLng
 import com.example.nearbyapp.utils.PermissionCallback
 import com.example.nearbyapp.utils.PermissionManger
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,7 +23,8 @@ class MainActivity :
     BaseActivity<ActivityMainBinding>(
         ActivityMainBinding::inflate,
     ),
-    PermissionCallback {
+    PermissionCallback,
+    CurrentLocationCallback {
 
     private val viewModel: MainViewModel by viewModels()
     private val navController by lazy {
@@ -31,6 +36,10 @@ class MainActivity :
         PermissionManger(activity = this@MainActivity, permissionCallback = this@MainActivity)
     }
 
+    private val locationManager: LocationManager by lazy {
+        LocationManager(activity = this@MainActivity, currLocationCallback = this@MainActivity)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -40,11 +49,9 @@ class MainActivity :
         super.onStart()
         if (!permissionManager.isLocationPermissionAlreadyGranted()) {
             permissionManager.requestLocationPermission()
+        } else {
+            locationManager.startLocationTracking()
         }
-    }
-
-    override fun handlePermanentDenial() {
-        showPermissionSettingsDialog()
     }
 
     private fun showPermissionSettingsDialog() {
@@ -64,5 +71,18 @@ class MainActivity :
         val uri = Uri.fromParts("package", packageName, null)
         intent.data = uri
         startActivity(intent)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        locationManager.stopLocationTracking()
+    }
+
+    override fun updatedCurrentLocation(latLng: LatLng) {
+        Log.d("current location", "lat: ${latLng.lat} lng : ${latLng.lng}")
+    }
+
+    override fun handlePermanentDenial() {
+        showPermissionSettingsDialog()
     }
 }
