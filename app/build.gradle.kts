@@ -10,11 +10,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.bookshelfapp"
+    namespace = "com.example.nearbyapp"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.example.bookshelfapp"
+        applicationId = "com.example.nearbyapp"
         minSdk = 24
         targetSdk = 33
         versionCode = 1
