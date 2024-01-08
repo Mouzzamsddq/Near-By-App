@@ -1,3 +1,4 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import java.util.regex.Pattern.compile
 
 plugins {
@@ -21,6 +22,11 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        val localPropertiesFile = rootProject.file("local.properties")
+        if (localPropertiesFile.exists()) {
+            val clientId: String = gradleLocalProperties(rootDir).getProperty("CLIENT_ID") ?: ""
+            buildConfigField("String", "CLIENT_ID", clientId)
+        }
     }
 
     buildTypes {

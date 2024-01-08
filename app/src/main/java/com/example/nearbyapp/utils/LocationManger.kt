@@ -1,8 +1,8 @@
+package com.example.nearbyapp.utils
+
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Looper
-import com.example.nearbyapp.utils.CurrentLocationCallback
-import com.example.nearbyapp.utils.LatLng
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Granularity
 import com.google.android.gms.location.LocationCallback

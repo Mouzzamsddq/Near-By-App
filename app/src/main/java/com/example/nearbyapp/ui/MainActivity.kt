@@ -1,6 +1,5 @@
 package com.example.nearbyapp.ui
 
-import LocationManager
 import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
@@ -14,6 +13,7 @@ import com.example.nearbyapp.base.BaseActivity
 import com.example.nearbyapp.databinding.ActivityMainBinding
 import com.example.nearbyapp.utils.CurrentLocationCallback
 import com.example.nearbyapp.utils.LatLng
+import com.example.nearbyapp.utils.LocationManager
 import com.example.nearbyapp.utils.PermissionCallback
 import com.example.nearbyapp.utils.PermissionManger
 import dagger.hilt.android.AndroidEntryPoint
