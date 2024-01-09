@@ -59,6 +59,7 @@ dependencies {
     val fragmentVersion = "1.6.1"
     val retrofit = "2.9.0"
     val converter = "2.9.0"
+    val pagingVersion = "3.1.1"
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
@@ -113,6 +114,8 @@ dependencies {
 
     // fused location provider for current location
     implementation("com.google.android.gms:play-services-location:21.0.1")
+
+    implementation("androidx.paging:paging-runtime:$pagingVersion")
 
 
 }

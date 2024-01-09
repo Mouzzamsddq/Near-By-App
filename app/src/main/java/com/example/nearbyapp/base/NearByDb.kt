@@ -12,7 +12,7 @@ import com.example.nearbyapp.data.features.home.local.entity.Venue
 import com.example.nearbyapp.data.features.home.local.entity.VenueRemoteKeys
 
 @Database(
-    version = 2,
+    version = 1,
     entities = [Venue::class, VenueRemoteKeys::class],
     exportSchema = false,
 )

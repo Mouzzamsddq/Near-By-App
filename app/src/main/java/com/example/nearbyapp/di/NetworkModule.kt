@@ -1,9 +1,10 @@
 package com.example.nearbyapp.di
 
 import com.example.nearbyapp.BuildConfig
+import com.example.nearbyapp.data.features.books.repository.remote.api.BooksApiService
+import com.example.nearbyapp.data.features.home.remote.api.HomeApiService
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.example.nearbyapp.data.features.books.repository.remote.api.BooksApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -51,11 +52,11 @@ object NetworkModule {
     fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create(gson))
-            .baseUrl("https://www.jsonkeeper.com/")
+            .baseUrl("https://api.seatgeek.com/2/")
             .client(okHttpClient)
             .build()
 
     @Provides
-    fun provideBooksApiService(retrofit: Retrofit): BooksApiService =
-        retrofit.create(BooksApiService::class.java)
+    fun provideBooksApiService(retrofit: Retrofit): HomeApiService =
+        retrofit.create(HomeApiService::class.java)
 }
