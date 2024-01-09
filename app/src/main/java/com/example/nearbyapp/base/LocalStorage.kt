@@ -25,4 +25,15 @@ class LocalStorage(application: Application) {
     }
 
     fun getBoolean(key: String): Boolean = sharedPreferences.getBoolean(key, false)
+
+    fun setDouble(key: String, value: Double) {
+        val editor = sharedPreferences.edit()
+        editor.putLong(key, java.lang.Double.doubleToRawLongBits(value))
+        editor.apply()
+    }
+
+    fun getDouble(key: String): Double {
+        val rawValue = sharedPreferences.getLong(key, 0)
+        return java.lang.Double.longBitsToDouble(rawValue)
+    }
 }

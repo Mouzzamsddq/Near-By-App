@@ -1,40 +1,34 @@
 package com.example.nearbyapp.ui.features.home.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import androidx.paging.liveData
 import com.example.nearbyapp.base.NearByDb
-import com.example.nearbyapp.data.features.home.local.entity.Venue
+import com.example.nearbyapp.data.features.home.HomeRepository
 import com.example.nearbyapp.data.features.home.paging.VenueRemoteMediator
 import com.example.nearbyapp.data.features.home.remote.api.HomeApiService
 import com.example.nearbyapp.utils.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flatMapLatest
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val homeApiService: HomeApiService,
     private val venueDatabase: NearByDb,
+    private val homeRepository: HomeRepository,
 ) : ViewModel() {
 
-    private val _locationFilter = MutableStateFlow(LatLng(0.0, 0.0))
-    private val _rangeFilter = MutableStateFlow("")
+
+    private val detailsUrl = MutableLiveData<LatLng>()
 
     @OptIn(ExperimentalPagingApi::class)
-    val nearByVenueFlow: Flow<PagingData<Venue>> = combine(
-        _locationFilter,
-        _rangeFilter,
-    ) { userLocation, range ->
-        Pair(userLocation, range)
-    }.flatMapLatest { (userLocation, range) ->
+    val nearByVenue = detailsUrl.switchMap {
         Pager(
             config = PagingConfig(
                 pageSize = 10,
@@ -43,14 +37,18 @@ class HomeViewModel @Inject constructor(
             remoteMediator = VenueRemoteMediator(
                 homeApiService,
                 venueDatabase,
-                userLocation,
-                range,
+                userCurrentLocation = it,
+                "",
             ),
+            initialKey = 1,
             pagingSourceFactory = { venueDatabase.venueDao().getVenues() },
-        ).flow.cachedIn(viewModelScope)
+        ).liveData.cachedIn(viewModelScope)
     }
 
-    fun loadDataBasedOnUserCurrentLocation(latLng: LatLng) {
-        _locationFilter.value = latLng
+    fun changeDetailUrl(userLocation: LatLng) {
+        homeRepository.saveUserLocation(userLocation = userLocation)
+        detailsUrl.value = userLocation
     }
+
+    fun getSavedUserLocation() = homeRepository.getSavedUserLocation()
 }

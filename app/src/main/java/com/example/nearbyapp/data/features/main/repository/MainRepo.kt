@@ -6,5 +6,4 @@ import javax.inject.Inject
 class MainRepo @Inject constructor(
     private val mainLocalDataSource: MainLocalDataSource,
 ) {
-    fun isUserAuthenticated() = mainLocalDataSource.isUserAuthenticated()
 }

@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">NearByApp</string>
     <string name="home">Home\n</string>
+    <string name="retry">Retry</string>
+    <string name="general_error_msg">Oops, Something went wrong...!</string>
+    <string name="no_venues_msg">Sorry, No Venues near to you...!</string>
 </resources>

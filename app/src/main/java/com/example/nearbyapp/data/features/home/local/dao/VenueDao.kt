@@ -13,6 +13,9 @@ interface VenueDao {
     @Query("SELECT * FROM VENUE")
     fun getVenues(): PagingSource<Int, Venue>
 
+    @Query("SELECT * FROM VENUE")
+    fun getVenuesList(): List<Venue>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addVenues(venues: List<Venue>)
 

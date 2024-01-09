@@ -38,10 +38,9 @@ class AuthLocalDataSource @Inject constructor(
     }
 
     fun saveUserAuthenticated() {
-        localStorage.setBoolean(LocalStorageConstants.IS_USER_AUTHENTICATED, true)
+
     }
 
     fun logout() {
-        localStorage.setBoolean(LocalStorageConstants.IS_USER_AUTHENTICATED, false)
     }
 }

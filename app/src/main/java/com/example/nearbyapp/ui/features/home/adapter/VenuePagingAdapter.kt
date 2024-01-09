@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.nearbyapp.R
 import com.example.nearbyapp.data.features.home.local.entity.Venue
 
-class QuotePagingAdapter : PagingDataAdapter<Venue, QuotePagingAdapter.QuoteViewHolder>(
+class VenuePagingAdapter : PagingDataAdapter<Venue, VenuePagingAdapter.QuoteViewHolder>(
     COMPARATOR,
 ) {
 

@@ -1,6 +1,6 @@
 package com.example.nearbyapp.ui.features.home
 
-import QuotePagingAdapter
+import VenuePagingAdapter
 import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
@@ -8,9 +8,9 @@ import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.paging.LoadState
 import com.example.nearbyapp.base.BaseFragment
 import com.example.nearbyapp.databinding.FragmentHomeBinding
 import com.example.nearbyapp.ui.MainActivity
@@ -21,8 +21,6 @@ import com.example.nearbyapp.utils.LocationManager
 import com.example.nearbyapp.utils.PermissionCallback
 import com.example.nearbyapp.utils.PermissionManger
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment :
@@ -33,6 +31,9 @@ class HomeFragment :
     CurrentLocationCallback {
 
     private val viewModel: HomeViewModel by viewModels()
+    private val venueAdapter by lazy {
+        VenuePagingAdapter()
+    }
     private val permissionManager: PermissionManger by lazy {
         PermissionManger(
             activity = activity as MainActivity,
@@ -46,15 +47,35 @@ class HomeFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.venueRv.apply {
-            val venueAdapter = QuotePagingAdapter()
-            layoutManager = LinearLayoutManager(context)
-            setHasFixedSize(true)
-            adapter = venueAdapter
+        binding.apply {
+            loaderView.root.isVisible = true
+            venueRv.apply {
+                setHasFixedSize(true)
+                adapter = venueAdapter
+            }
+            viewModel.getSavedUserLocation()?.let {
+                viewModel.changeDetailUrl(it)
+            }
+            viewModel.nearByVenue.observe(viewLifecycleOwner) {
+                venueAdapter.submitData(viewLifecycleOwner.lifecycle, it)
+            }
 
-            lifecycleScope.launch {
-                viewModel.nearByVenueFlow.collectLatest {
-                    venueAdapter.submitData(viewLifecycleOwner.lifecycle, it)
+            venueAdapter.addLoadStateListener { loadState ->
+                loaderView.root.isVisible = loadState.refresh == LoadState.Loading
+                venueRv.isVisible = loadState.source.refresh is LoadState.NotLoading
+                retryBtn.isVisible = loadState.source.refresh is LoadState.Error
+                errorTextMessage.isVisible = loadState.source.refresh is LoadState.Error
+                if (loadState.source.refresh is LoadState.NotLoading &&
+                    venueAdapter.itemCount == 0
+                ) {
+                    venueRv.isVisible = false
+                    noVenuesIv.isVisible = true
+                    noVenuesTv.isVisible = true
+                } else {
+                    Log.d("kkk","called")
+                    venueRv.isVisible = true
+                    noVenuesIv.isVisible = false
+                    noVenuesTv.isVisible = false
                 }
             }
         }
@@ -62,10 +83,15 @@ class HomeFragment :
 
     override fun updatedCurrentLocation(latLng: LatLng) {
         Log.d("current location", "lat: ${latLng.lat} lng : ${latLng.lng}")
+        viewModel.changeDetailUrl(latLng)
     }
 
     override fun handlePermanentDenial() {
         showPermissionSettingsDialog()
+    }
+
+    override fun permissionGranted() {
+        locationManager.startLocationTracking()
     }
 
     override fun onStart() {
