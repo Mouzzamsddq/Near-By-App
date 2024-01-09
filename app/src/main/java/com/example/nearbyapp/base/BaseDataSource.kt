@@ -1,7 +1,6 @@
 package com.example.nearbyapp.base
 
-import com.example.nearbyapp.data.features.books.repository.remote.model.ErrorResponse
-import com.google.gson.Gson
+import org.json.JSONObject
 import retrofit2.Response
 
 abstract class BaseDataSource {
@@ -16,12 +15,12 @@ abstract class BaseDataSource {
                     return Resource.success(null)
                 }
             }
+            var jObjError: JSONObject
             var errorMessage = ""
             try {
-                val gson = Gson()
-                val jsonObject =
-                    gson.fromJson(response.errorBody()?.string(), ErrorResponse::class.java)
-                errorMessage = jsonObject.errors.getOrNull(0)?.message ?: ""
+                jObjError = response.errorBody()?.string()?.let { JSONObject(it) } ?: JSONObject("")
+                val errors = jObjError.getJSONArray("errors").getJSONObject(0)
+                errorMessage = errors.getString("reason")
             } catch (e: java.lang.Exception) {
                 errorMessage = response.errorBody()?.string() ?: response.message()
             } finally {

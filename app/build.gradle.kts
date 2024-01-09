@@ -97,6 +97,7 @@ dependencies {
     // room components
     val roomVersion = "2.5.2"
     implementation("androidx.room:room-ktx:$roomVersion")
+    implementation("androidx.room:room-paging:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
 
     // hilt for dependency injection
