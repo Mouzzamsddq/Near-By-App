@@ -1,7 +1,7 @@
 package com.example.nearbyapp.utils
 
 import android.annotation.SuppressLint
-import android.app.Activity
+import android.content.Context
 import android.os.Looper
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Granularity
@@ -12,18 +12,18 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 
 class LocationManager(
-    activity: Activity,
+    context: Context?,
     currLocationCallback: CurrentLocationCallback,
     private var timeInterval: Long = 60,
     private var minimalDistance: Float = 500f,
 ) {
 
     private var request: LocationRequest
-    private var locationClient: FusedLocationProviderClient
+    private var locationClient: FusedLocationProviderClient?
     private var locationCallback: LocationCallback
 
     init {
-        locationClient = LocationServices.getFusedLocationProviderClient(activity)
+        locationClient = context?.let { LocationServices.getFusedLocationProviderClient(it) }
         request = createRequest()
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(result: LocationResult) {
@@ -48,11 +48,11 @@ class LocationManager(
 
     @SuppressLint("MissingPermission")
     fun startLocationTracking() {
-        locationClient.requestLocationUpdates(request, locationCallback, Looper.getMainLooper())
+        locationClient?.requestLocationUpdates(request, locationCallback, Looper.getMainLooper())
     }
 
     fun stopLocationTracking() {
-        locationClient.flushLocations()
-        locationClient.removeLocationUpdates(locationCallback)
+        locationClient?.flushLocations()
+        locationClient?.removeLocationUpdates(locationCallback)
     }
 }
