@@ -24,7 +24,6 @@ class HomeViewModel @Inject constructor(
     private val homeRepository: HomeRepository,
 ) : ViewModel() {
 
-
     private val detailsUrl = MutableLiveData<LatLng>()
 
     @OptIn(ExperimentalPagingApi::class)
@@ -45,7 +44,7 @@ class HomeViewModel @Inject constructor(
         ).liveData.cachedIn(viewModelScope)
     }
 
-    fun changeDetailUrl(userLocation: LatLng) {
+    fun updatedUserLocation(userLocation: LatLng) {
         homeRepository.saveUserLocation(userLocation = userLocation)
         detailsUrl.value = userLocation
     }

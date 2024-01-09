@@ -16,6 +16,7 @@ import com.example.nearbyapp.databinding.FragmentHomeBinding
 import com.example.nearbyapp.ui.MainActivity
 import com.example.nearbyapp.ui.features.home.viewmodel.HomeViewModel
 import com.example.nearbyapp.utils.CurrentLocationCallback
+import com.example.nearbyapp.utils.Helper
 import com.example.nearbyapp.utils.LatLng
 import com.example.nearbyapp.utils.LocationManager
 import com.example.nearbyapp.utils.PermissionCallback
@@ -54,7 +55,7 @@ class HomeFragment :
                 adapter = venueAdapter
             }
             viewModel.getSavedUserLocation()?.let {
-                viewModel.changeDetailUrl(it)
+                loadUpdatedDataBasedOnLocation(it)
             }
             viewModel.nearByVenue.observe(viewLifecycleOwner) {
                 venueAdapter.submitData(viewLifecycleOwner.lifecycle, it)
@@ -72,7 +73,7 @@ class HomeFragment :
                     noVenuesIv.isVisible = true
                     noVenuesTv.isVisible = true
                 } else {
-                    Log.d("kkk","called")
+                    Log.d("kkk", "called")
                     venueRv.isVisible = true
                     noVenuesIv.isVisible = false
                     noVenuesTv.isVisible = false
@@ -83,7 +84,27 @@ class HomeFragment :
 
     override fun updatedCurrentLocation(latLng: LatLng) {
         Log.d("current location", "lat: ${latLng.lat} lng : ${latLng.lng}")
-        viewModel.changeDetailUrl(latLng)
+        loadUpdatedDataBasedOnLocation(latLng = latLng, permissionCheckRequired = true)
+    }
+
+    private fun loadUpdatedDataBasedOnLocation(
+        latLng: LatLng,
+        permissionCheckRequired: Boolean = false,
+    ) {
+        if (permissionCheckRequired) {
+            if (!permissionManager.isLocationPermissionAlreadyGranted()) {
+                Helper.showToast(
+                    context,
+                    msg = "Please enable location permission from settings...!",
+                )
+                return
+            }
+            if (!locationManager.isGpsEnabled()) {
+                Helper.showToast(context, msg = "Please enable gps to see the updated venues...!")
+                return
+            }
+        }
+        viewModel.updatedUserLocation(latLng)
     }
 
     override fun handlePermanentDenial() {

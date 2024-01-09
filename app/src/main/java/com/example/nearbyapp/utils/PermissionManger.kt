@@ -16,6 +16,7 @@ class PermissionManger(
     ) { permissions ->
         when {
             permissions.getOrDefault(android.Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
+                permissionCallback.permissionGranted()
                 Toast.makeText(activity, "Permission granted", Toast.LENGTH_SHORT).show()
             }
 
