@@ -5,16 +5,18 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.example.nearbyapp.BuildConfig
 import com.example.nearbyapp.base.NearByDb
 import com.example.nearbyapp.data.features.home.local.entity.Venue
 import com.example.nearbyapp.data.features.home.local.entity.VenueRemoteKeys
 import com.example.nearbyapp.data.features.home.remote.api.HomeApiService
+import com.example.nearbyapp.utils.LatLng
 
 @OptIn(ExperimentalPagingApi::class)
 class VenueRemoteMediator(
     private val homeApiService: HomeApiService,
     private val venueDatabase: NearByDb,
+    private val userCurrentLocation: LatLng,
+    private val range: String,
 ) : RemoteMediator<Int, Venue>() {
 
     private val venueDao = venueDatabase.venueDao()
@@ -57,7 +59,7 @@ class VenueRemoteMediator(
 //                query = "",
 //            )
             val response = homeApiService.getVenues(
-                "https://api.seatgeek.com/2/venues?per_page=10&page=$currentPage&client_id=Mzg0OTc0Njl8MTcwMDgxMTg5NC44MDk2NjY5&lat=12.971599&lon=77.594566&range=12mi&q=ub"
+                "https://api.seatgeek.com/2/venues?per_page=10&page=$currentPage&client_id=Mzg0OTc0Njl8MTcwMDgxMTg5NC44MDk2NjY5&lat=${userCurrentLocation.lat}&lon=${userCurrentLocation.lng}&range=12mi&q=ub",
             )
             val endOfPaginationReached = response.meta?.total == currentPage
 

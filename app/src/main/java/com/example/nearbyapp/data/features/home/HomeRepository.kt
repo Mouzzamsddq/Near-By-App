@@ -13,13 +13,4 @@ class HomeRepository @Inject constructor(
     private val venueDatabase: NearByDb,
 ) {
 
-    @OptIn(ExperimentalPagingApi::class)
-    fun getVenues() = Pager(
-        config = PagingConfig(
-            pageSize = 10,
-            maxSize = 100,
-        ),
-        remoteMediator = VenueRemoteMediator(homeApiService, venueDatabase),
-        pagingSourceFactory = { venueDatabase.venueDao().getVenues() },
-    ).flow
 }

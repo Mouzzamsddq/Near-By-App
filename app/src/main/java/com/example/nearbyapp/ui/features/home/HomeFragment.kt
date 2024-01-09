@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -54,7 +53,7 @@ class HomeFragment :
             adapter = venueAdapter
 
             lifecycleScope.launch {
-                viewModel.venues.collectLatest {
+                viewModel.nearByVenueFlow.collectLatest {
                     venueAdapter.submitData(viewLifecycleOwner.lifecycle, it)
                 }
             }
