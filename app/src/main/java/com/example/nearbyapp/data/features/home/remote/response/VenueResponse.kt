@@ -46,7 +46,7 @@ data class Venue(
     @SerializedName("postal_code")
     val postalCode: String? = null,
     @SerializedName("score")
-    val score: Int? = null,
+    val score: Double? = null,
     @SerializedName("slug")
     val slug: String? = null,
     @SerializedName("state")
