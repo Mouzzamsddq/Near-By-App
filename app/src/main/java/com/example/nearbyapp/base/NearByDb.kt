@@ -6,30 +6,30 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.nearbyapp.constants.StringConstant
-import com.example.nearbyapp.data.features.auth.repository.local.dao.UsersDao
-import com.example.nearbyapp.data.features.auth.repository.local.entity.Users
-import com.example.nearbyapp.data.features.favourites.repository.local.FavBook
-import com.example.nearbyapp.data.features.favourites.repository.local.dao.FavBooksDao
+import com.example.nearbyapp.data.features.home.local.dao.RemoteKeysDao
+import com.example.nearbyapp.data.features.home.local.dao.VenueDao
+import com.example.nearbyapp.data.features.home.local.entity.Venue
+import com.example.nearbyapp.data.features.home.local.entity.VenueRemoteKeys
 
 @Database(
     version = 2,
-    entities = [Users::class, FavBook::class],
+    entities = [Venue::class, VenueRemoteKeys::class],
     exportSchema = false,
 )
 @TypeConverters(Converter::class)
-abstract class BookShelfDb : RoomDatabase() {
+abstract class NearByDb : RoomDatabase() {
 
-    abstract fun usersDao(): UsersDao
-    abstract fun favBookDao(): FavBooksDao
+    abstract fun venueDao(): VenueDao
+    abstract fun remoteKeyDao(): RemoteKeysDao
 
     companion object {
         @Volatile
-        private var INSTANCE: BookShelfDb? = null
-        fun getDatabase(context: Context): BookShelfDb {
+        private var INSTANCE: NearByDb? = null
+        fun getDatabase(context: Context): NearByDb {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    BookShelfDb::class.java,
+                    NearByDb::class.java,
                     StringConstant.DB_NAME,
                 ).fallbackToDestructiveMigration()
                     .build()
