@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import androidx.core.view.isVisible
@@ -16,6 +17,7 @@ import androidx.paging.LoadState
 import com.example.nearbyapp.base.BaseFragment
 import com.example.nearbyapp.databinding.FragmentHomeBinding
 import com.example.nearbyapp.ui.MainActivity
+import com.example.nearbyapp.ui.features.home.adapter.LoadStateFooterAdapter
 import com.example.nearbyapp.ui.features.home.viewmodel.HomeViewModel
 import com.example.nearbyapp.utils.CurrentLocationCallback
 import com.example.nearbyapp.utils.Helper
@@ -64,7 +66,9 @@ class HomeFragment :
             loaderView.root.isVisible = true
             venueRv.apply {
                 setHasFixedSize(true)
-                adapter = venueAdapter
+                adapter = venueAdapter.withLoadStateFooter(
+                    footer = LoadStateFooterAdapter { venueAdapter.retry() },
+                )
             }
             viewModel.nearByVenue.observe(viewLifecycleOwner) {
                 venueAdapter.submitData(viewLifecycleOwner.lifecycle, it)
@@ -72,18 +76,18 @@ class HomeFragment :
 
             venueAdapter.addLoadStateListener { loadState ->
                 loaderView.root.isVisible = loadState.mediator?.refresh is LoadState.Loading
-//                venueRv.isVisible =
-//                    loadState.source.refresh is LoadState.NotLoading || loadState.mediator?.refresh is LoadState.NotLoading
                 retryBtn.isVisible =
                     loadState.mediator?.refresh is LoadState.Error && venueAdapter.itemCount == 0
                 errorTextMessage.isVisible =
                     loadState.mediator?.refresh is LoadState.Error && venueAdapter.itemCount == 0
-//                noVenuesIv.isVisible =
-//                    loadState.refresh is LoadState.NotLoading && venueAdapter.itemCount == 0
-//                noVenuesTv.isVisible =
-//                    loadState.refresh is LoadState.NotLoading && venueAdapter.itemCount == 0
+                noVenuesIv.isVisible =
+                    loadState.refresh is LoadState.NotLoading && venueAdapter.itemCount == 0
+                noVenuesTv.isVisible =
+                    loadState.refresh is LoadState.NotLoading && venueAdapter.itemCount == 0
             }
             retryBtn.setOnClickListener {
+                Log.d("kkk", "clicked on retry button")
+                Helper.showToast(context,"clicked on retry button")
                 venueAdapter.retry()
             }
 
@@ -125,10 +129,14 @@ class HomeFragment :
                     count: Int,
                 ) {
                     query?.toString().let { query ->
-                        viewModel.searchByVenueName(if (query.isNullOrBlank()) null else query)
+                        crossIv.isVisible = !query.isNullOrBlank()
+                        viewModel.searchByVenueName(if (query.isNullOrBlank()) null else query.trim())
                     }
                 }
             })
+            crossIv.setOnClickListener {
+                searchEt.text.clear()
+            }
         }
     }
 

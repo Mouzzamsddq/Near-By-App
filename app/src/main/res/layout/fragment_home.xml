@@ -68,6 +68,33 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/venue_rv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_0dp"
+        android:layout_marginTop="@dimen/margin_10"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/seekbar_cl"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search_cl" />
+
+
+    <include
+        android:id="@+id/loader_view"
+        layout="@layout/loader_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/margin_10"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
     <TextView
         android:id="@+id/error_text_message"
         android:layout_width="wrap_content"
@@ -105,31 +132,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/error_text_message"
-        tools:visibility="visible" />
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/venue_rv"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/margin_0dp"
-        android:layout_marginTop="@dimen/margin_10"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/seekbar_cl"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search_cl" />
-
-    <include
-        android:id="@+id/loader_view"
-        layout="@layout/loader_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="@dimen/margin_10"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
 
 

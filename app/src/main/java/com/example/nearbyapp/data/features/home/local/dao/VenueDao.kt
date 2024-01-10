@@ -11,7 +11,7 @@ import com.example.nearbyapp.data.features.home.local.entity.Venue
 @Dao
 interface VenueDao {
 
-    @Query("SELECT * FROM VENUE WHERE :query IS NULL OR name LIKE '%' || :query || '%'")
+    @Query("SELECT * FROM VENUE WHERE :query IS NULL OR name LIKE '%' || :query || '%' COLLATE NOCASE")
     fun getVenues(query: String?): PagingSource<Int, Venue>
 
     @Query("SELECT * FROM VENUE WHERE name LIKE :searchQuery")
