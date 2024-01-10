@@ -33,7 +33,9 @@ class HomeFragment :
 
     private val viewModel: HomeViewModel by viewModels()
     private val venueAdapter by lazy {
-        VenuePagingAdapter()
+        VenuePagingAdapter {
+            openUrl(url = it)
+        }
     }
     private val permissionManager: PermissionManger by lazy {
         PermissionManger(
@@ -63,11 +65,16 @@ class HomeFragment :
 
             venueAdapter.addLoadStateListener { loadState ->
                 loaderView.root.isVisible = loadState.mediator?.refresh is LoadState.Loading
-                venueRv.isVisible = loadState.source.refresh is LoadState.NotLoading || loadState.mediator?.refresh is LoadState.NotLoading
-                retryBtn.isVisible = loadState.mediator?.refresh is LoadState.Error && venueAdapter.itemCount == 0
-                errorTextMessage.isVisible = loadState.mediator?.refresh is LoadState.Error && venueAdapter.itemCount == 0
-                noVenuesIv.isVisible = loadState.refresh is LoadState.NotLoading && venueAdapter.itemCount == 0
-                noVenuesTv.isVisible = loadState.refresh is LoadState.NotLoading && venueAdapter.itemCount == 0
+                venueRv.isVisible =
+                    loadState.source.refresh is LoadState.NotLoading || loadState.mediator?.refresh is LoadState.NotLoading
+                retryBtn.isVisible =
+                    loadState.mediator?.refresh is LoadState.Error && venueAdapter.itemCount == 0
+                errorTextMessage.isVisible =
+                    loadState.mediator?.refresh is LoadState.Error && venueAdapter.itemCount == 0
+                noVenuesIv.isVisible =
+                    loadState.refresh is LoadState.NotLoading && venueAdapter.itemCount == 0
+                noVenuesTv.isVisible =
+                    loadState.refresh is LoadState.NotLoading && venueAdapter.itemCount == 0
             }
             retryBtn.setOnClickListener {
                 venueAdapter.retry()
@@ -140,5 +147,10 @@ class HomeFragment :
     override fun onStop() {
         super.onStop()
         locationManager.stopLocationTracking()
+    }
+
+    private fun openUrl(url: String) {
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(browserIntent)
     }
 }

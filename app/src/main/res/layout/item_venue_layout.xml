@@ -1,25 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_height="wrap_content">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/margin_18">
+
 
     <TextView
-        android:textColor="#000"
-        android:textSize="20sp"
-        android:text="Truth is powerful and it prevails."
-        android:id="@+id/venue"
-        android:layout_width="match_parent"
+        android:id="@+id/venue_name_tv"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_marginStart="@dimen/margin_15"
+        android:layout_marginEnd="@dimen/margin_5"
+        android:letterSpacing="0.01"
+        android:text="Venue Title"
+        android:textColor="?primaryTextColor"
+        android:textSize="@dimen/size_14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:padding="16dp" />
+        app:layout_goneMarginEnd="@dimen/margin_30" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#CCC"
-        app:layout_constraintTop_toBottomOf="@id/venue"/>
+    <TextView
+        android:id="@+id/venue_address_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_15"
+        android:layout_marginEnd="@dimen/margin_5"
+        android:ellipsize="end"
+        android:letterSpacing="0.01"
+        android:maxLines="2"
+        android:text="Venue Address"
+        android:textColor="?secondaryTextColor"
+        android:textSize="@dimen/size_14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/venue_name_tv"
+        app:layout_goneMarginEnd="@dimen/margin_30" />
+
+
+    <TextView
+        android:id="@+id/venue_city_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_15"
+        android:layout_marginEnd="@dimen/margin_5"
+        android:ellipsize="end"
+        android:letterSpacing="0.01"
+        android:maxLines="2"
+        android:text="Venue city"
+        android:textColor="?secondaryTextColor"
+        android:textSize="@dimen/size_14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/venue_address_tv"
+        app:layout_goneMarginEnd="@dimen/margin_30" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

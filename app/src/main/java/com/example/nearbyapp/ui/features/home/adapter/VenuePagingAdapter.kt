@@ -1,29 +1,52 @@
-import android.view.LayoutInflater
-import android.view.View
+
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.nearbyapp.R
 import com.example.nearbyapp.data.features.home.local.entity.Venue
+import com.example.nearbyapp.databinding.ItemVenueLayoutBinding
+import com.example.nearbyapp.utils.viewBinding
 
-class VenuePagingAdapter : PagingDataAdapter<Venue, VenuePagingAdapter.QuoteViewHolder>(
+class VenuePagingAdapter(
+    private val onVenueItemClick: (String) -> Unit,
+) : PagingDataAdapter<Venue, VenuePagingAdapter.VenueViewHolder>(
     COMPARATOR,
 ) {
 
-    class QuoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val quote = itemView.findViewById<TextView>(R.id.venue)
+    class VenueViewHolder(
+        private val binding: ItemVenueLayoutBinding,
+        private val onVenueItemClick: (String) -> Unit,
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(venue: Venue) {
+            binding.apply {
+                venueNameTv.isVisible = venue.name.isNotBlank()
+                venueAddressTv.isVisible = venue.address.isNotBlank()
+                venueCityTv.isVisible = venue.city.isNotBlank()
+                venueNameTv.text = venue.name
+                venueAddressTv.text = venue.address
+                venueCityTv.text = venue.city
+            }
+            itemView.setOnClickListener {
+                if (venue.url.isNotBlank()) {
+                    onVenueItemClick(venue.url)
+                }
+            }
+        }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuoteViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_venue_layout, parent, false)
-        return QuoteViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VenueViewHolder {
+        return VenueViewHolder(
+            binding = parent.viewBinding(ItemVenueLayoutBinding::inflate),
+            onVenueItemClick = onVenueItemClick,
+        )
     }
 
-    override fun onBindViewHolder(holder: QuoteViewHolder, position: Int) {
-        val item = getItem(position)
-        holder.quote.text = item?.name ?: ""
+    override fun onBindViewHolder(holder: VenueViewHolder, position: Int) {
+        val venueItem = getItem(position)
+        venueItem?.let {
+            holder.bind(venueItem)
+        }
     }
 
     companion object {

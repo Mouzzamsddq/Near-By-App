@@ -9,5 +9,7 @@ data class Venue(
     val id: Long,
     val name: String,
     val url: String,
+    val city: String,
+    val address: String,
     val displayLocation: String,
 )

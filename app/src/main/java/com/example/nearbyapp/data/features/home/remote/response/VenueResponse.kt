@@ -63,6 +63,8 @@ data class Venue(
         name = nameV2 ?: "",
         url = url ?: "",
         displayLocation = displayLocation ?: "",
+        city = city ?: "",
+        address = address ?: "",
     )
 }
 
