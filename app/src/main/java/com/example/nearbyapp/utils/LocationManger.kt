@@ -4,9 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.location.LocationManager
 import android.os.Looper
-import android.util.Log
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.Granularity
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
@@ -47,8 +45,8 @@ class LocationManager(
             it?.let {
                 currLocationCallback.updatedCurrentLocation(
                     latLng = LatLng(
-                        it.longitude,
                         it.latitude,
+                        it.longitude,
                     ),
                 )
             }
