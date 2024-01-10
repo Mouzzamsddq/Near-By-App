@@ -139,26 +139,22 @@ class HomeFragment :
     }
 
     override fun updatedCurrentLocation(latLng: LatLng) {
-        loadUpdatedDataBasedOnLocation(latLng = latLng, permissionCheckRequired = true)
+        loadUpdatedDataBasedOnLocation(latLng = latLng)
     }
 
     private fun loadUpdatedDataBasedOnLocation(
         latLng: LatLng,
-        permissionCheckRequired: Boolean =
-            false,
     ) {
-        if (permissionCheckRequired) {
-            if (!permissionManager.isLocationPermissionAlreadyGranted()) {
-                Helper.showToast(
-                    context,
-                    msg = "Please enable location permission from settings...!",
-                )
-                return
-            }
-            if (!locationManager.isGpsEnabled()) {
-                Helper.showToast(context, msg = "Please enable gps to see the updated venues...!")
-                return
-            }
+        if (!permissionManager.isLocationPermissionAlreadyGranted()) {
+            Helper.showToast(
+                context,
+                msg = "Please enable location permission from settings...!",
+            )
+            return
+        }
+        if (!locationManager.isGpsEnabled()) {
+            Helper.showToast(context, msg = "Please enable gps to see the updated venues...!")
+            return
         }
         viewModel.updatedUserLocation(latLng)
     }
