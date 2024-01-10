@@ -16,7 +16,7 @@ class LocationManager(
     private val context: Context?,
     private val currLocationCallback: CurrentLocationCallback,
     private var timeInterval: Long = 60,
-    private var minimalDistance: Float = 100f,
+    private var minimalDistance: Float = 50f,
 ) {
 
     private var request: LocationRequest

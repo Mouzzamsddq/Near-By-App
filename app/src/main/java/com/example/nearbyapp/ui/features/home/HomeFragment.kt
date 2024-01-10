@@ -6,6 +6,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.SeekBar
 import androidx.core.view.isVisible
@@ -101,6 +103,30 @@ class HomeFragment :
                 }
 
                 override fun onStopTrackingTouch(seekBar: SeekBar) {
+                }
+            })
+
+            searchEt.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                }
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int,
+                ) {
+                }
+
+                override fun onTextChanged(
+                    query: CharSequence?,
+                    start: Int,
+                    before: Int,
+                    count: Int,
+                ) {
+                    query?.toString().let { query ->
+                        viewModel.searchByVenueName(if (query.isNullOrBlank()) null else query)
+                    }
                 }
             })
         }
