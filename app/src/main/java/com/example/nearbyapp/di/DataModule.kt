@@ -22,8 +22,8 @@ object DataModule {
     fun provideDatabase(application: Application) = NearByDb.getDatabase(application)
 
     @Provides
-    fun usersDao(db: NearByDb): VenueDao = db.venueDao()
+    fun venueDao(db: NearByDb): VenueDao = db.venueDao()
 
     @Provides
-    fun favBookDao(db: NearByDb): RemoteKeysDao = db.remoteKeyDao()
+    fun remoteKeysDao(db: NearByDb): RemoteKeysDao = db.remoteKeyDao()
 }
