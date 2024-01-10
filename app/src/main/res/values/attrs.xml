@@ -2,13 +2,5 @@
 <resources>
     <attr name="primaryTextColor" format="color"/>
     <attr name="secondaryTextColor" format="color"/>
-    <attr name="actionTextColor" format="color"/>
-    <attr name="transparentBackground" format="color"/>
     <attr name="textEntryBackground" format="color"/>
-    <attr name="textHighlightColor" format="color"/>
-    <attr name="textColorLink" format="color"/>
-    <attr name="miniPlayerTextColor" format="color"/>
-    <attr name="grey1color" format="color"/>
-    <attr name="grey2color" format="color"/>
-    <attr  name="snackBarSurface" format="color"/>
 </resources>

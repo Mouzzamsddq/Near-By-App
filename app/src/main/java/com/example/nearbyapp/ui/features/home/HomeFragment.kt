@@ -13,6 +13,7 @@ import android.widget.SeekBar
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.paging.LoadState
+import com.example.nearbyapp.R
 import com.example.nearbyapp.base.BaseFragment
 import com.example.nearbyapp.databinding.FragmentHomeBinding
 import com.example.nearbyapp.ui.MainActivity
@@ -184,11 +185,11 @@ class HomeFragment :
     private fun showPermissionSettingsDialog() {
         alertDialog = AlertDialog.Builder(context)
             .setCancelable(false)
-            .setMessage("Location permission is required for the app to function properly. Please enable it in the app settings.")
-            .setPositiveButton("Open Settings") { _, _ ->
+            .setMessage(getString(R.string.location_permission_msg))
+            .setPositiveButton(getString(R.string.open_settings)) { _, _ ->
                 openAppSettings()
             }
-            .setNegativeButton("Cancel") { _, _ ->
+            .setNegativeButton(getString(R.string.cancel)) { _, _ ->
                 activity?.finish()
             }
             .show()
@@ -200,7 +201,7 @@ class HomeFragment :
 
     private fun openAppSettings() {
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-        val uri = Uri.fromParts("package", activity?.packageName, null)
+        val uri = Uri.fromParts(getString(R.string.package_scheme), activity?.packageName, null)
         intent.data = uri
         startActivity(intent)
     }

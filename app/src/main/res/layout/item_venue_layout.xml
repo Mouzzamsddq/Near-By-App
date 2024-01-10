@@ -10,9 +10,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="14dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="5dp"
+        app:cardCornerRadius="@dimen/margin_10"
+        app:cardElevation="@dimen/margin_5"
         app:cardUseCompatPadding="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -71,8 +70,7 @@
                 android:textSize="@dimen/size_14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/venue_address_tv"
-                app:layout_goneMarginEnd="@dimen/margin_30" />
+                app:layout_constraintTop_toBottomOf="@id/venue_address_tv"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">NearByApp</string>
-    <string name="home">Home\n</string>
+    <string name="home">Home</string>
     <string name="retry">Retry</string>
-    <string name="general_error_msg">Oops, Something went wrong...!</string>
-    <string name="no_venues_msg">Sorry, No Venues near to you...!</string>
+    <string name="general_error_msg">Oops, Something went wrong…!</string>
+    <string name="no_venues_msg">Sorry, No Venues near to you…!</string>
     <string name="search_hint">Search by venue name\n</string>
+    <string name="location_permission_msg">Location permission is required for the app to function properly. Please enable it in the app settings.</string>
+    <string name="open_settings">Open Settings</string>
+    <string name="cancel">Cancel</string>
+    <string name="package_scheme">package</string>
 </resources>
