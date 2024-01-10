@@ -72,30 +72,30 @@
 
 
     <ImageView
+        android:id="@+id/no_venues_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_no_venues"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:id="@+id/no_venues_iv"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
         android:id="@+id/no_venues_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/no_venues_msg"
-        app:layout_constraintTop_toBottomOf="@id/no_venues_iv"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textAlignment="center"
         android:layout_marginTop="@dimen/margin_20"
         android:letterSpacing="0.01"
+        android:text="@string/no_venues_msg"
+        android:textAlignment="center"
+        android:textColor="?secondaryTextColor"
         android:textSize="@dimen/size_14sp"
         android:visibility="gone"
-        android:textColor="?secondaryTextColor"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/no_venues_iv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
