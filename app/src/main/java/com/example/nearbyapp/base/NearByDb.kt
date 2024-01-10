@@ -16,7 +16,6 @@ import com.example.nearbyapp.data.features.home.local.entity.VenueRemoteKeys
     entities = [Venue::class, VenueRemoteKeys::class],
     exportSchema = false,
 )
-@TypeConverters(Converter::class)
 abstract class NearByDb : RoomDatabase() {
 
     abstract fun venueDao(): VenueDao
