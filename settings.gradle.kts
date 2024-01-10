@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "BookShelfApp"
+rootProject.name = "NearByApp"
 include(":app")
  

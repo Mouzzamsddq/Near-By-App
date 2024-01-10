@@ -1,53 +1,12 @@
 <resources>
-    <string name="app_name">BookShelfApp</string>
-    <string name="login">Login</string>
-    <string name="remember">Remember me</string>
-    <string name="forgot_password">Forgot Password?</string>
-    <string name="enter_password">Enter  password</string>
-    <string name="password">Password</string>
-    <string name="enter_name_here">Enter name here</string>
-    <string name="name">Name</string>
-    <string name="sign_up">Signup here</string>
-    <string name="dont_account">Don\'t have an account?</string>
-    <string name="skip">Skip</string>
-    <string name="login_to_book_shelf">Login to BookShelf</string>
+    <string name="app_name">NearByApp</string>
     <string name="home">Home</string>
-    <string name="favourites">Favourites</string>
-    <string name="profile">Profile</string>
-    <string name="sign_in">Sign In</string>
-    <string name="sign_up_label">Sign Up</string>
-    <string name="create_account">Create an account</string>
-    <string name="login_here">Login here</string>
-    <string name="signup">Signup</string>
-    <string name="already_account">Already have an account?</string>
-    <string name="username">Username</string>
-    <string name="create_password">Create a password</string>
-    <string name="select_country">Select country</string>
-    <string name="select_a_country">Select a country</string>
-    <string name="please_enter_valid_name">Please enter a valid name…!</string>
-    <string name="please_enter_valid_password">Please enter a valid password…!</string>
-    <string name="password_validity_error">Password must have at least 8 characters with one number, special characters, one lowercase letter, and one uppercase letter…!</string>
-    <string name="please_select_country">Please select country...!</string>
-    <string name="signup_successful">Signup successful</string>
-    <string name="login_successful">Login successful</string>
-    <string name="book_title">Book Title</string>
-    <string name="dummy_hits">112</string>
-    <string name="backButton">back\n</string>
-    <string name="bookmark">bookmark\n</string>
-    <string name="book_detail">Book Details</string>
-    <string name="no_fav_message">You haven\'t marked any book as fav</string>
-    <string name="logout">Logout</string>
-    <string name="are_you_sure_to_log_out">Are you sure to log out?</string>
-    <string name="no">No</string>
-    <string name="yes">Yes</string>
-    <string name="hits_text">Hits: %1$d</string>
-    <string name="updated_on">Updated on: %s</string>
-    <string name="sort_by">Sort By:</string>
-    <string name="ascending_order">Ascending Order:</string>
-    <string-array name="sort_list">
-        <item>Select Sorting</item>
-        <item>Title</item>
-        <item>Hits</item>
-        <item>Favourites</item>
-    </string-array>
+    <string name="retry">Retry</string>
+    <string name="general_error_msg">Oops, Something went wrong…!</string>
+    <string name="no_venues_msg">Sorry, No Venues near to you…!</string>
+    <string name="search_hint">Search by venue name\n</string>
+    <string name="location_permission_msg">Location permission is required for the app to function properly. Please enable it in the app settings.</string>
+    <string name="open_settings">Open Settings</string>
+    <string name="cancel">Cancel</string>
+    <string name="package_scheme">package</string>
 </resources>

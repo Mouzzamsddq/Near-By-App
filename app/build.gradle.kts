@@ -1,3 +1,4 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import java.util.regex.Pattern.compile
 
 plugins {
@@ -10,17 +11,22 @@ plugins {
 }
 
 android {
-    namespace = "com.example.bookshelfapp"
+    namespace = "com.example.nearbyapp"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.example.bookshelfapp"
+        applicationId = "com.example.nearbyapp"
         minSdk = 24
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        val localPropertiesFile = rootProject.file("local.properties")
+        if (localPropertiesFile.exists()) {
+            val clientId: String = gradleLocalProperties(rootDir).getProperty("CLIENT_ID") ?: ""
+            buildConfigField("String", "CLIENT_ID", clientId)
+        }
     }
 
     buildTypes {
@@ -53,6 +59,7 @@ dependencies {
     val fragmentVersion = "1.6.1"
     val retrofit = "2.9.0"
     val converter = "2.9.0"
+    val pagingVersion = "3.1.1"
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
@@ -91,6 +98,7 @@ dependencies {
     // room components
     val roomVersion = "2.5.2"
     implementation("androidx.room:room-ktx:$roomVersion")
+    implementation("androidx.room:room-paging:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
 
     // hilt for dependency injection
@@ -100,11 +108,16 @@ dependencies {
     // palette
     implementation("androidx.palette:palette-ktx:1.0.0")
 
-    // lorem text
-    implementation("com.thedeanda:lorem:2.2")
 
     // splash screen api
     implementation("androidx.core:core-splashscreen:1.0.1")
+
+    // fused location provider for current location
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+
+    implementation("androidx.paging:paging-runtime:$pagingVersion")
+
+
 }
 
 kapt {
