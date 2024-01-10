@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.SeekBar
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.example.nearbyapp.R
 import com.example.nearbyapp.base.BaseFragment
@@ -30,6 +31,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -74,16 +76,21 @@ class HomeFragment :
                 venueAdapter.submitData(viewLifecycleOwner.lifecycle, it)
             }
 
-            venueAdapter.addLoadStateListener { loadState ->
-                loaderView.root.isVisible = loadState.mediator?.refresh is LoadState.Loading
-                retryBtn.isVisible =
-                    loadState.mediator?.refresh is LoadState.Error && venueAdapter.itemCount == 0
-                errorTextMessage.isVisible =
-                    loadState.mediator?.refresh is LoadState.Error && venueAdapter.itemCount == 0
-                noVenuesIv.isVisible =
-                    loadState.refresh is LoadState.NotLoading && venueAdapter.itemCount == 0
-                noVenuesTv.isVisible =
-                    loadState.refresh is LoadState.NotLoading && venueAdapter.itemCount == 0
+//            venueAdapter.loadStateFlow { loadState ->
+//
+//                retryBtn.isVisible =
+//                    loadState.mediator?.refresh is LoadState.Error && venueAdapter.itemCount == 0
+//                errorTextMessage.isVisible =
+//                    loadState.mediator?.refresh is LoadState.Error && venueAdapter.itemCount == 0
+//                noVenuesIv.isVisible =
+//                    loadState.refresh is LoadState.NotLoading && venueAdapter.itemCount == 0
+//                noVenuesTv.isVisible =
+//                    loadState.refresh is LoadState.NotLoading && venueAdapter.itemCount == 0
+//            }
+            lifecycleScope.launch {
+                venueAdapter.loadStateFlow.collectLatest { loadState ->
+                    loaderView.root.isVisible = loadState.mediator?.refresh is LoadState.Loading
+                }
             }
             retryBtn.setOnClickListener {
                 venueAdapter.retry()

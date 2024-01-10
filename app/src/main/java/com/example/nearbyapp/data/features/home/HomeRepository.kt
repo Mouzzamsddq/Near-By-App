@@ -22,7 +22,7 @@ class HomeRepository @Inject constructor(
         searchQuery: String?,
     ) = Pager(
         config = PagingConfig(
-            pageSize = 10,
+            pageSize = 20,
             maxSize = 100,
         ),
         remoteMediator = VenueRemoteMediator(

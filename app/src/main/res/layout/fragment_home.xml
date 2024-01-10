@@ -167,7 +167,7 @@
         android:id="@+id/seekbar_cl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?colorPrimary"
+        android:background="?textEntryBackground"
         android:paddingVertical="@dimen/margin_20"
         app:layout_constraintBottom_toBottomOf="parent">
 
@@ -177,6 +177,8 @@
             android:layout_height="wrap_content"
             android:max="50"
             android:progress="3"
+            android:progressTint="?colorPrimary"
+            android:thumb="@drawable/ic_seekbar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
