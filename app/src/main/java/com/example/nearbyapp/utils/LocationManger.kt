@@ -16,8 +16,8 @@ import com.google.android.gms.location.Priority
 class LocationManager(
     private val context: Context?,
     private val currLocationCallback: CurrentLocationCallback,
-    private var timeInterval: Long = 60,
-    private var minimalDistance: Float = 50f,
+    private var timeInterval: Long = 10000,
+    private var minimalDistance: Float = 100f,
 ) {
 
     private var request: LocationRequest
@@ -58,7 +58,6 @@ class LocationManager(
     private fun createRequest(): LocationRequest =
         LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, timeInterval).apply {
             setMinUpdateDistanceMeters(minimalDistance)
-            setGranularity(Granularity.GRANULARITY_PERMISSION_LEVEL)
             setWaitForAccurateLocation(true)
         }.build()
 

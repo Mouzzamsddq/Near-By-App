@@ -65,12 +65,12 @@ class VenueRemoteMediator(
             val nextPage = if (endOfPaginationReached) null else currentPage + 1
 
             venueDatabase.withTransaction {
+                val resultVenues = response.venues?.map { it.toVenueEntity() } ?: emptyList()
                 if (loadType == LoadType.REFRESH) {
                     venueDao.deleteVenues()
                     venueRemoteKeysDao.deleteAllRemoteKeys()
                 }
-
-                venueDao.addVenues(response.venues?.map { it.toVenueEntity() } ?: emptyList())
+                venueDao.addVenues(resultVenues)
                 val keys = response.venues?.map { venue ->
                     VenueRemoteKeys(
                         id = venue.id,

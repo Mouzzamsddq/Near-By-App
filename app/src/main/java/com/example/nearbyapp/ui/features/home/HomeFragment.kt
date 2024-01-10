@@ -78,10 +78,7 @@ class HomeFragment :
 
 //            venueAdapter.loadStateFlow { loadState ->
 //
-//                retryBtn.isVisible =
-//                    loadState.mediator?.refresh is LoadState.Error && venueAdapter.itemCount == 0
-//                errorTextMessage.isVisible =
-//                    loadState.mediator?.refresh is LoadState.Error && venueAdapter.itemCount == 0
+
 //                noVenuesIv.isVisible =
 //                    loadState.refresh is LoadState.NotLoading && venueAdapter.itemCount == 0
 //                noVenuesTv.isVisible =
@@ -90,6 +87,10 @@ class HomeFragment :
             lifecycleScope.launch {
                 venueAdapter.loadStateFlow.collectLatest { loadState ->
                     loaderView.root.isVisible = loadState.mediator?.refresh is LoadState.Loading
+                    retryBtn.isVisible =
+                        loadState.mediator?.refresh is LoadState.Error && venueAdapter.itemCount == 0
+                    errorTextMessage.isVisible =
+                        loadState.mediator?.refresh is LoadState.Error && venueAdapter.itemCount == 0
                 }
             }
             retryBtn.setOnClickListener {
