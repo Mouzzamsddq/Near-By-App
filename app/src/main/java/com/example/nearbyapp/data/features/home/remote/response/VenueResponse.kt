@@ -59,7 +59,7 @@ data class Venue(
     val url: String? = null,
 ) {
     fun toVenueEntity() = VenueEntity(
-        id = id ?: 0,
+        id = id,
         name = nameV2 ?: "",
         url = url ?: "",
         displayLocation = displayLocation ?: "",

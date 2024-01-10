@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.BookShelfApp" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.NearByApp" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <item name="grey1color">@color/grey_1_night</item>
         <item name="grey2color">@color/grey_2_night</item>
@@ -32,6 +32,6 @@
         <item name="windowSplashScreenBackground">@color/primary_black</item>
         <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_icon_round</item>
         <item name="windowSplashScreenAnimationDuration">300</item>
-        <item name="postSplashScreenTheme">@style/Theme.BookShelfApp</item>  # Required.
+        <item name="postSplashScreenTheme">@style/Theme.NearByApp</item>  # Required.
     </style>
 </resources>
