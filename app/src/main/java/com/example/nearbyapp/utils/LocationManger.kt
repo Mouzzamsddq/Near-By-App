@@ -14,13 +14,14 @@ import com.google.android.gms.location.Priority
 
 class LocationManager(
     private val context: Context?,
-    currLocationCallback: CurrentLocationCallback,
+    private val currLocationCallback: CurrentLocationCallback,
     private var timeInterval: Long = 60,
     private var minimalDistance: Float = 100f,
 ) {
 
     private var request: LocationRequest
-    private var locationClient: FusedLocationProviderClient? = context?.let { LocationServices.getFusedLocationProviderClient(it) }
+    private var locationClient: FusedLocationProviderClient? =
+        context?.let { LocationServices.getFusedLocationProviderClient(it) }
     private var locationCallback: LocationCallback
 
     init {
@@ -35,6 +36,20 @@ class LocationManager(
                         ),
                     )
                 }
+            }
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    fun getCurrentLocationCallBack() {
+        locationClient?.lastLocation?.addOnSuccessListener {
+            it?.let {
+                currLocationCallback.updatedCurrentLocation(
+                    latLng = LatLng(
+                        it.longitude,
+                        it.latitude,
+                    ),
+                )
             }
         }
     }
@@ -57,7 +72,8 @@ class LocationManager(
     }
 
     fun isGpsEnabled(): Boolean {
-        val locationManager: LocationManager = context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val locationManager: LocationManager =
+            context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
     }
 }

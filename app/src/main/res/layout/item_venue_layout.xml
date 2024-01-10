@@ -2,60 +2,84 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_cl"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/margin_18">
+    android:background="@android:color/transparent">
 
-
-    <TextView
-        android:id="@+id/venue_name_tv"
-        android:layout_width="0dp"
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_15"
-        android:layout_marginEnd="@dimen/margin_5"
-        android:letterSpacing="0.01"
-        android:text="Venue Title"
-        android:textColor="?primaryTextColor"
-        android:textSize="@dimen/size_14sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="14dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="5dp"
+        app:cardUseCompatPadding="true"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_goneMarginEnd="@dimen/margin_30" />
-
-    <TextView
-        android:id="@+id/venue_address_tv"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_15"
-        android:layout_marginEnd="@dimen/margin_5"
-        android:ellipsize="end"
-        android:letterSpacing="0.01"
-        android:maxLines="2"
-        android:text="Venue Address"
-        android:textColor="?secondaryTextColor"
-        android:textSize="@dimen/size_14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/venue_name_tv"
-        app:layout_goneMarginEnd="@dimen/margin_30" />
+        app:layout_constraintTop_toTopOf="parent">
 
 
-    <TextView
-        android:id="@+id/venue_city_tv"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_15"
-        android:layout_marginEnd="@dimen/margin_5"
-        android:ellipsize="end"
-        android:letterSpacing="0.01"
-        android:maxLines="2"
-        android:text="Venue city"
-        android:textColor="?secondaryTextColor"
-        android:textSize="@dimen/size_14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/venue_address_tv"
-        app:layout_goneMarginEnd="@dimen/margin_30" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:paddingVertical="@dimen/margin_10">
+
+            <TextView
+                android:id="@+id/venue_name_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_15"
+                android:layout_marginEnd="@dimen/margin_5"
+                android:letterSpacing="0.01"
+                android:text="Venue Title"
+                android:textColor="?primaryTextColor"
+                android:textSize="@dimen/size_14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_goneMarginEnd="@dimen/margin_30" />
+
+            <TextView
+                android:id="@+id/venue_address_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_15"
+                android:layout_marginEnd="@dimen/margin_5"
+                android:ellipsize="end"
+                android:letterSpacing="0.01"
+                android:maxLines="2"
+                android:text="Venue Address"
+                android:textColor="?secondaryTextColor"
+                android:textSize="@dimen/size_14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/venue_name_tv"
+                app:layout_goneMarginEnd="@dimen/margin_30" />
+
+
+            <TextView
+                android:id="@+id/venue_city_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_15"
+                android:layout_marginEnd="@dimen/margin_5"
+                android:ellipsize="end"
+                android:letterSpacing="0.01"
+                android:maxLines="2"
+                android:text="Venue city"
+                android:textColor="?secondaryTextColor"
+                android:textSize="@dimen/size_14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/venue_address_tv"
+                app:layout_goneMarginEnd="@dimen/margin_30" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+

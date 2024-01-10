@@ -1,5 +1,7 @@
 package com.example.nearbyapp.ui.features.home.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
@@ -10,7 +12,6 @@ import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import androidx.paging.liveData
 import com.example.nearbyapp.base.NearByDb
-import com.example.nearbyapp.data.features.home.HomeRepository
 import com.example.nearbyapp.data.features.home.paging.VenueRemoteMediator
 import com.example.nearbyapp.data.features.home.remote.api.HomeApiService
 import com.example.nearbyapp.utils.LatLng
@@ -21,13 +22,33 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val homeApiService: HomeApiService,
     private val venueDatabase: NearByDb,
-    private val homeRepository: HomeRepository,
 ) : ViewModel() {
 
-    private val detailsUrl = MutableLiveData<LatLng>()
+    private val _userLocationLd = MutableLiveData<LatLng>()
+    private val userLocationLd: LiveData<LatLng> = _userLocationLd
+    private val _distanceFilterLd = MutableLiveData<Int>(3)
+    private val distanceFilterLd: LiveData<Int> = _distanceFilterLd
+
+    private val combinedLiveData = MediatorLiveData<Pair<LatLng, Int>>().apply {
+        addSource(userLocationLd) { location ->
+            location?.let {
+                distanceFilterLd.value?.let {
+                    value = Pair(location, it)
+                }
+            }
+        }
+
+        addSource(distanceFilterLd) { distanceFilter ->
+            distanceFilter?.let {
+                userLocationLd.value?.let { latlng ->
+                    value = Pair(latlng, it)
+                }
+            }
+        }
+    }
 
     @OptIn(ExperimentalPagingApi::class)
-    val nearByVenue = detailsUrl.switchMap {
+    val nearByVenue = combinedLiveData.switchMap {
         Pager(
             config = PagingConfig(
                 pageSize = 10,
@@ -36,8 +57,8 @@ class HomeViewModel @Inject constructor(
             remoteMediator = VenueRemoteMediator(
                 homeApiService,
                 venueDatabase,
-                userCurrentLocation = it,
-                "",
+                userCurrentLocation = it.first,
+                it.second,
             ),
             initialKey = 1,
             pagingSourceFactory = { venueDatabase.venueDao().getVenues() },
@@ -45,9 +66,10 @@ class HomeViewModel @Inject constructor(
     }
 
     fun updatedUserLocation(userLocation: LatLng) {
-        homeRepository.saveUserLocation(userLocation = userLocation)
-        detailsUrl.value = userLocation
+        _userLocationLd.value = userLocation
     }
 
-    fun getSavedUserLocation() = homeRepository.getSavedUserLocation()
+    fun changeDistanceFilter(distance: Int) {
+        _distanceFilterLd.value = distance
+    }
 }

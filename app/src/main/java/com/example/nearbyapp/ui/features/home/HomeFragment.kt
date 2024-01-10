@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.View
+import android.widget.SeekBar
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.paging.LoadState
@@ -22,6 +23,11 @@ import com.example.nearbyapp.utils.LocationManager
 import com.example.nearbyapp.utils.PermissionCallback
 import com.example.nearbyapp.utils.PermissionManger
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment :
@@ -30,7 +36,9 @@ class HomeFragment :
     ),
     PermissionCallback,
     CurrentLocationCallback {
-
+    private val debouncePeriod = 1000L
+    private var lastSeekBarValue: Int = 0
+    private var debounceJob: Job? = null
     private val viewModel: HomeViewModel by viewModels()
     private val venueAdapter by lazy {
         VenuePagingAdapter {
@@ -47,6 +55,7 @@ class HomeFragment :
     private val locationManager: LocationManager by lazy {
         LocationManager(context = context, currLocationCallback = this@HomeFragment)
     }
+    private var alertDialog: AlertDialog? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,29 +65,47 @@ class HomeFragment :
                 setHasFixedSize(true)
                 adapter = venueAdapter
             }
-            viewModel.getSavedUserLocation()?.let {
-                loadUpdatedDataBasedOnLocation(it)
-            }
             viewModel.nearByVenue.observe(viewLifecycleOwner) {
                 venueAdapter.submitData(viewLifecycleOwner.lifecycle, it)
             }
 
             venueAdapter.addLoadStateListener { loadState ->
                 loaderView.root.isVisible = loadState.mediator?.refresh is LoadState.Loading
-                venueRv.isVisible =
-                    loadState.source.refresh is LoadState.NotLoading || loadState.mediator?.refresh is LoadState.NotLoading
+//                venueRv.isVisible =
+//                    loadState.source.refresh is LoadState.NotLoading || loadState.mediator?.refresh is LoadState.NotLoading
                 retryBtn.isVisible =
                     loadState.mediator?.refresh is LoadState.Error && venueAdapter.itemCount == 0
                 errorTextMessage.isVisible =
                     loadState.mediator?.refresh is LoadState.Error && venueAdapter.itemCount == 0
-                noVenuesIv.isVisible =
-                    loadState.refresh is LoadState.NotLoading && venueAdapter.itemCount == 0
-                noVenuesTv.isVisible =
-                    loadState.refresh is LoadState.NotLoading && venueAdapter.itemCount == 0
+//                noVenuesIv.isVisible =
+//                    loadState.refresh is LoadState.NotLoading && venueAdapter.itemCount == 0
+//                noVenuesTv.isVisible =
+//                    loadState.refresh is LoadState.NotLoading && venueAdapter.itemCount == 0
             }
             retryBtn.setOnClickListener {
                 venueAdapter.retry()
             }
+
+            seekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                    debounceJob?.cancel()
+                    debounceJob = CoroutineScope(Dispatchers.Main).launch {
+                        delay(debouncePeriod)
+                        if (progress != lastSeekBarValue) {
+                            lastSeekBarValue = progress
+                            viewModel.changeDistanceFilter(progress)
+                        }
+                    }
+                }
+
+                override fun onStartTrackingTouch(seekBar: SeekBar) {
+                    // you can probably leave this empty
+                }
+
+                override fun onStopTrackingTouch(seekBar: SeekBar) {
+                    // you can probably leave this empty
+                }
+            })
         }
     }
 
@@ -121,12 +148,15 @@ class HomeFragment :
         if (!permissionManager.isLocationPermissionAlreadyGranted()) {
             permissionManager.requestLocationPermission()
         } else {
+            dismissAlertDialog()
+            locationManager.getCurrentLocationCallBack()
             locationManager.startLocationTracking()
         }
     }
 
     private fun showPermissionSettingsDialog() {
-        AlertDialog.Builder(context)
+        alertDialog = AlertDialog.Builder(context)
+            .setCancelable(false)
             .setMessage("Location permission is required for the app to function properly. Please enable it in the app settings.")
             .setPositiveButton("Open Settings") { _, _ ->
                 openAppSettings()
@@ -135,6 +165,10 @@ class HomeFragment :
                 activity?.finish()
             }
             .show()
+    }
+
+    private fun dismissAlertDialog() {
+        alertDialog?.dismiss()
     }
 
     private fun openAppSettings() {
