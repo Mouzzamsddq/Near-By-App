@@ -1,7 +1,6 @@
 package com.example.nearbyapp.di
 
 import com.example.nearbyapp.BuildConfig
-import com.example.nearbyapp.data.features.books.repository.remote.api.BooksApiService
 import com.example.nearbyapp.data.features.home.remote.api.HomeApiService
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
