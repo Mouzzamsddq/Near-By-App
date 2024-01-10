@@ -15,8 +15,8 @@ import com.google.android.gms.location.Priority
 class LocationManager(
     private val context: Context?,
     currLocationCallback: CurrentLocationCallback,
-    private var timeInterval: Long = 30,
-    private var minimalDistance: Float = 1f,
+    private var timeInterval: Long = 60,
+    private var minimalDistance: Float = 100f,
 ) {
 
     private var request: LocationRequest

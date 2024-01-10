@@ -7,19 +7,19 @@ import retrofit2.http.Query
 import retrofit2.http.Url
 
 interface HomeApiService {
-//    @GET("venues")
-//    suspend fun getVenues(
-//        @Query("per_page") perPage: Int,
-//        @Query("page") page: Int,
-//        @Query("client_id") clientId: String,
-//        @Query("lat") latitude: Double,
-//        @Query("lon") longitude: Double,
-//        @Query("range") range: String,
-//        @Query("q") query: String,
-//    ): VenueResponse
-
-    @GET
+    @GET("venues")
     suspend fun getVenues(
-        @Url forceUpdateUrl: String
+        @Query("per_page") perPage: Int,
+        @Query("page") page: Int,
+        @Query("client_id") clientId: String,
+        @Query("lat") latitude: Double,
+        @Query("lon") longitude: Double,
+        @Query("range") range: String,
+        @Query("q") query: String,
     ): VenueResponse
+
+//    @GET
+//    suspend fun getVenues(
+//        @Url forceUpdateUrl: String
+//    ): VenueResponse
 }

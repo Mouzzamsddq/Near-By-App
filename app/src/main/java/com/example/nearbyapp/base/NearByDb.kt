@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
 import com.example.nearbyapp.constants.StringConstant
 import com.example.nearbyapp.data.features.home.local.dao.RemoteKeysDao
 import com.example.nearbyapp.data.features.home.local.dao.VenueDao

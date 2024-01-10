@@ -62,22 +62,15 @@ class HomeFragment :
             }
 
             venueAdapter.addLoadStateListener { loadState ->
-                loaderView.root.isVisible = loadState.refresh == LoadState.Loading
-                venueRv.isVisible = loadState.source.refresh is LoadState.NotLoading
-                retryBtn.isVisible = loadState.source.refresh is LoadState.Error
-                errorTextMessage.isVisible = loadState.source.refresh is LoadState.Error
-                if (loadState.source.refresh is LoadState.NotLoading &&
-                    venueAdapter.itemCount == 0
-                ) {
-                    venueRv.isVisible = false
-                    noVenuesIv.isVisible = true
-                    noVenuesTv.isVisible = true
-                } else {
-                    Log.d("kkk", "called")
-                    venueRv.isVisible = true
-                    noVenuesIv.isVisible = false
-                    noVenuesTv.isVisible = false
-                }
+                loaderView.root.isVisible = loadState.mediator?.refresh is LoadState.Loading
+                venueRv.isVisible = loadState.source.refresh is LoadState.NotLoading || loadState.mediator?.refresh is LoadState.NotLoading
+                retryBtn.isVisible = loadState.mediator?.refresh is LoadState.Error && venueAdapter.itemCount == 0
+                errorTextMessage.isVisible = loadState.mediator?.refresh is LoadState.Error && venueAdapter.itemCount == 0
+                noVenuesIv.isVisible = loadState.refresh is LoadState.NotLoading && venueAdapter.itemCount == 0
+                noVenuesTv.isVisible = loadState.refresh is LoadState.NotLoading && venueAdapter.itemCount == 0
+            }
+            retryBtn.setOnClickListener {
+                venueAdapter.retry()
             }
         }
     }
@@ -89,7 +82,8 @@ class HomeFragment :
 
     private fun loadUpdatedDataBasedOnLocation(
         latLng: LatLng,
-        permissionCheckRequired: Boolean = false,
+        permissionCheckRequired: Boolean =
+            false,
     ) {
         if (permissionCheckRequired) {
             if (!permissionManager.isLocationPermissionAlreadyGranted()) {

@@ -51,22 +51,20 @@ class VenueRemoteMediator(
                 }
             }
 
-//            val response = homeApiService.getVenues(
-//                perPage = 10,
-//                page = 1,
-//                clientId = BuildConfig.CLIENT_ID,
-//                latitude = 37.3346433,
-//                longitude = -122.0089717,
-//                range = "12mi",
-//                query = "",
-//            )
             val response = homeApiService.getVenues(
-                "https://api.seatgeek.com/2/venues?per_page=10&page=$currentPage&client_id=Mzg0OTc0Njl8MTcwMDgxMTg5NC44MDk2NjY5&lat=${userCurrentLocation.lat}&lon=${userCurrentLocation.lng}&range=12mi&q=ub",
+                perPage = 10,
+                page = currentPage,
+                clientId = "Mzg0OTc0Njl8MTcwMDgxMTg5NC44MDk2NjY5",
+                latitude = userCurrentLocation.lat,
+                longitude = userCurrentLocation.lng,
+                range = "12mi",
+                query = "",
             )
-            val endOfPaginationReached = response.meta?.total == currentPage
+            val endOfPaginationReached =
+                response.meta?.total == currentPage || response.venues?.isEmpty() == true
 
             val prevPage = if (currentPage == 1) null else currentPage - 1
-            val nextPage = if (endOfPaginationReached || currentPage == 4) null else currentPage + 1
+            val nextPage = if (endOfPaginationReached) null else currentPage + 1
 
             venueDatabase.withTransaction {
                 if (loadType == LoadType.REFRESH) {
