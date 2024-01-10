@@ -1,10 +1,8 @@
 package com.example.nearbyapp.data.features.home.remote.api
 
 import com.example.nearbyapp.data.features.home.remote.response.VenueResponse
-import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
-import retrofit2.http.Url
 
 interface HomeApiService {
     @GET("venues")
@@ -15,11 +13,5 @@ interface HomeApiService {
         @Query("lat") latitude: Double,
         @Query("lon") longitude: Double,
         @Query("range") range: String,
-        @Query("q") query: String,
     ): VenueResponse
-
-//    @GET
-//    suspend fun getVenues(
-//        @Url forceUpdateUrl: String
-//    ): VenueResponse
 }

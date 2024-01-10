@@ -1,11 +1,37 @@
 package com.example.nearbyapp.data.features.home
 
-import com.example.nearbyapp.data.features.home.local.LocalHomeDataSource
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.liveData
+import com.example.nearbyapp.base.NearByDb
+import com.example.nearbyapp.data.features.home.paging.VenueRemoteMediator
+import com.example.nearbyapp.data.features.home.remote.api.HomeApiService
+import com.example.nearbyapp.utils.LatLng
 import javax.inject.Inject
 
 class HomeRepository @Inject constructor(
-    private val localHomeDataSource: LocalHomeDataSource,
+    private val homeApiService: HomeApiService,
+    private val venueDatabase: NearByDb,
 ) {
-    fun getVenueListBasedOnSearchQuery(searchQuery: String) =
-        localHomeDataSource.getVenuesListBasedOnNameSearch(searchQuery = searchQuery)
+
+    @OptIn(ExperimentalPagingApi::class)
+    fun getVenues(
+        userLocation: LatLng,
+        distance: Int,
+        searchQuery: String?,
+    ) = Pager(
+        config = PagingConfig(
+            pageSize = 10,
+            maxSize = 100,
+        ),
+        remoteMediator = VenueRemoteMediator(
+            homeApiService = homeApiService,
+            venueDatabase = venueDatabase,
+            userCurrentLocation = userLocation,
+            distance = distance,
+        ),
+        initialKey = 1,
+        pagingSourceFactory = { venueDatabase.venueDao().getVenues(query = searchQuery) },
+    ).liveData
 }

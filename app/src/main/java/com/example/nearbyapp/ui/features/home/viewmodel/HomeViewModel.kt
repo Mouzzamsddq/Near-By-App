@@ -5,24 +5,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
-import androidx.paging.ExperimentalPagingApi
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
-import androidx.paging.liveData
-import com.example.nearbyapp.base.NearByDb
+import androidx.room.util.query
 import com.example.nearbyapp.data.features.home.HomeRepository
-import com.example.nearbyapp.data.features.home.paging.VenueRemoteMediator
-import com.example.nearbyapp.data.features.home.remote.api.HomeApiService
 import com.example.nearbyapp.utils.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val homeApiService: HomeApiService,
-    private val venueDatabase: NearByDb,
-    private val homeRepo: HomeRepository,
+    private val homeRepository: HomeRepository,
 ) : ViewModel() {
 
     private val _userLocationLd = MutableLiveData<LatLng>()
@@ -54,22 +46,12 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    @OptIn(ExperimentalPagingApi::class)
     val nearByVenue = combinedLiveData.switchMap {
-        Pager(
-            config = PagingConfig(
-                pageSize = 10,
-                maxSize = 100,
-            ),
-            remoteMediator = VenueRemoteMediator(
-                homeApiService,
-                venueDatabase,
-                userCurrentLocation = it.first,
-                it.second,
-            ),
-            initialKey = 1,
-            pagingSourceFactory = { venueDatabase.venueDao().getVenues(query = it.third) },
-        ).liveData.cachedIn(viewModelScope)
+        homeRepository.getVenues(
+            userLocation = it.first,
+            distance = it.second,
+            searchQuery = it.third,
+        ).cachedIn(viewModelScope)
     }
 
     fun updatedUserLocation(userLocation: LatLng) {

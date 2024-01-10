@@ -17,7 +17,7 @@ class VenueRemoteMediator(
     private val homeApiService: HomeApiService,
     private val venueDatabase: NearByDb,
     private val userCurrentLocation: LatLng,
-    private val range: Int,
+    private val distance: Int,
 ) : RemoteMediator<Int, Venue>() {
 
     private val venueDao = venueDatabase.venueDao()
@@ -56,8 +56,7 @@ class VenueRemoteMediator(
                 clientId = BuildConfig.CLIENT_ID,
                 latitude = userCurrentLocation.lat,
                 longitude = userCurrentLocation.lng,
-                range = "${range}mi",
-                query = "",
+                range = "${distance}mi",
             )
             val endOfPaginationReached =
                 response.meta?.total == currentPage || response.venues?.isEmpty() == true

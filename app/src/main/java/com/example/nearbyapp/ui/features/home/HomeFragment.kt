@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import androidx.core.view.isVisible
@@ -86,8 +85,6 @@ class HomeFragment :
                     loadState.refresh is LoadState.NotLoading && venueAdapter.itemCount == 0
             }
             retryBtn.setOnClickListener {
-                Log.d("kkk", "clicked on retry button")
-                Helper.showToast(context,"clicked on retry button")
                 venueAdapter.retry()
             }
 
@@ -128,9 +125,9 @@ class HomeFragment :
                     before: Int,
                     count: Int,
                 ) {
-                    query?.toString().let { query ->
-                        crossIv.isVisible = !query.isNullOrBlank()
-                        viewModel.searchByVenueName(if (query.isNullOrBlank()) null else query.trim())
+                    query?.toString().let { q ->
+                        crossIv.isVisible = !q.isNullOrBlank()
+                        viewModel.searchByVenueName(if (q.isNullOrBlank()) null else q.trim())
                     }
                 }
             })
