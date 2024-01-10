@@ -6,7 +6,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import androidx.core.view.isVisible
@@ -99,18 +98,15 @@ class HomeFragment :
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar) {
-                    // you can probably leave this empty
                 }
 
                 override fun onStopTrackingTouch(seekBar: SeekBar) {
-                    // you can probably leave this empty
                 }
             })
         }
     }
 
     override fun updatedCurrentLocation(latLng: LatLng) {
-        Log.d("current location", "lat: ${latLng.lat} lng : ${latLng.lng}")
         loadUpdatedDataBasedOnLocation(latLng = latLng, permissionCheckRequired = true)
     }
 

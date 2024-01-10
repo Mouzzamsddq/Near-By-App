@@ -6,6 +6,7 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
+import com.example.nearbyapp.BuildConfig
 import com.example.nearbyapp.base.NearByDb
 import com.example.nearbyapp.data.features.home.local.entity.Venue
 import com.example.nearbyapp.data.features.home.local.entity.VenueRemoteKeys
@@ -46,7 +47,6 @@ class VenueRemoteMediator(
                         ?: return MediatorResult.Success(
                             endOfPaginationReached = remoteKeys != null,
                         )
-                    Log.d("kkk", "next key : $nextPage")
                     nextPage
                 }
             }
@@ -54,7 +54,7 @@ class VenueRemoteMediator(
             val response = homeApiService.getVenues(
                 perPage = 10,
                 page = currentPage,
-                clientId = "Mzg0OTc0Njl8MTcwMDgxMTg5NC44MDk2NjY5",
+                clientId = BuildConfig.CLIENT_ID,
                 latitude = userCurrentLocation.lat,
                 longitude = userCurrentLocation.lng,
                 range = "${range}mi",
@@ -112,7 +112,6 @@ class VenueRemoteMediator(
     ): VenueRemoteKeys? {
         return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()
             ?.let { venue ->
-                Log.d("kkk", "next key id : ${venue.id}")
                 venueRemoteKeysDao.getRemoteKeys(id = venue.id)
             }
     }
